@@ -23,7 +23,8 @@ class TextForm extends StatelessWidget {
           ),
         ),
         Container(
-            width: 330,
+          height: 47,
+            width: 315,
             decoration: BoxDecoration(
                 color: Color.fromARGB(255, 238, 236, 236),
                 borderRadius: BorderRadius.circular(10)),

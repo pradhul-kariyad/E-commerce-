@@ -47,25 +47,28 @@ class CreatePage extends StatelessWidget {
             TextForm(name: 'Name'),
             TextForm(name: 'Email'),
             TextForm(name: 'Password', icon: Icons.remove_red_eye_outlined),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Checkboxx(),
-                Text(
-                  'Agree with ',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
-                ),
-                Text(
-                  "Terms&Condition",
-                  style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 14,
-                      decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.w500),
-                ),
-              ],
+            // SizedBox(
+            //   height: 10,
+            // ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10,left: 13),
+              child: Row(
+                children: [
+                  Checkboxx(),
+                  Text(
+                    'Agree with ',
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                  ),
+                  Text(
+                    "Terms&Condition",
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 14,
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 20),
