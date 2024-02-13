@@ -1,4 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:mainproject/commonWidget/containerButton.dart';
+import 'package:mainproject/pages/createPage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,7 +14,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 10),
               child: Row(
                 children: [
                   Padding(
@@ -48,7 +52,85 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
+            SizedBox(
+              height: 34,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Your Shopping ",
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ),
+                Text(
+                  "Destination",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ),
+              ],
+            ),
+            Text('for Everything',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20)),
+            Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: GestureDetector(
+                onTap: () {
+                  print('Start Page');
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return CreatePage();
+                  }));
+                },
+                child: ContainerButton(
+                  name: "Let's Get Started",
+                ),
+              ),
+            ),
+            // ElevatedButton(
+            //   onPressed: () {},
+            //   child: Text("Let's Get Started"),
+            //   style: ElevatedButton.styleFrom(
+
+            //     backgroundColor: (Colors.red)),
+            // ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Already have an account?  ',
+                  style:
+                      //  Theme.of(context)
+                      //     .textTheme
+                      //     .displaySmall
+                      //     ?.copyWith(color: const Color.fromARGB(66, 158, 120, 120))
+                      TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    print("Sign In");
+                  },
+                  child: Text(
+                    'Sign In',
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Colors.red,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
