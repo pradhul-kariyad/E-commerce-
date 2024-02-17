@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class ContainerButton extends StatelessWidget {
   final name;
@@ -17,8 +18,8 @@ class ContainerButton extends StatelessWidget {
               fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-      width: 315,
-      height: 46,
+      width: 86.w,
+      height: 6.5.h,
       decoration: BoxDecoration(
           color: Colors.red, borderRadius: BorderRadius.circular(14)),
     );

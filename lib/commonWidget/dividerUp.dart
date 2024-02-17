@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class DividerUp extends StatelessWidget {
   final name;
@@ -13,8 +14,8 @@ class DividerUp extends StatelessWidget {
       children: [
         Expanded(
             child: Divider(
-          indent: 40,
-          endIndent: 8,
+          indent: 6.h,
+          endIndent: 1.3.h,
           thickness: 1,
         )),
         Text(
@@ -24,8 +25,8 @@ class DividerUp extends StatelessWidget {
         ),
         Expanded(
             child: Divider(
-          indent: 8,
-          endIndent: 40,
+          indent: 1.3.h,
+          endIndent: 6.h,
           thickness: 1,
         ))
       ],

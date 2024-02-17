@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mainproject/commonWidget/containerButton.dart';
-import 'package:mainproject/commonWidget/TextForm.dart';
-import 'package:mainproject/commonWidget/checkBox.dart';
-import 'package:mainproject/commonWidget/dividerUp.dart';
-import 'package:mainproject/pages/homePage.dart';
+import 'package:mainproject/CommonWidget/containerButton.dart';
+import 'package:mainproject/CommonWidget/TextForm.dart';
+import 'package:mainproject/CommonWidget/checkBox.dart';
+import 'package:mainproject/CommonWidget/dividerUp.dart';
+import 'package:mainproject/View/SpashScreen/homePage.dart';
+// import 'package:mainproject/View/homePage.dart';
+import 'package:sizer/sizer.dart';
 
 class CreatePage extends StatelessWidget {
   const CreatePage({super.key});
@@ -15,34 +17,36 @@ class CreatePage extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 60),
+              padding: EdgeInsets.only(top: 9.h),
               child: Center(
                 child: Text(
                   'Create Account',
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 30,
+                      fontSize: 25.sp,
                       fontWeight: FontWeight.w500),
                 ),
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 3.h,
             ),
             Text(
               'Fill your information below or register',
               style: TextStyle(
+                  fontSize: 11.sp,
                   fontWeight: FontWeight.w400,
                   color: const Color.fromARGB(255, 209, 207, 207)),
             ),
             Text(
               'with your social account.',
               style: TextStyle(
+                  fontSize: 11.sp,
                   fontWeight: FontWeight.w400,
                   color: const Color.fromARGB(255, 209, 207, 207)),
             ),
             SizedBox(
-              height: 30,
+              height: 3.h,
             ),
             TextForm(name: 'Name'),
             TextForm(name: 'Email'),
@@ -51,19 +55,20 @@ class CreatePage extends StatelessWidget {
             //   height: 10,
             // ),
             Padding(
-              padding: const EdgeInsets.only(top: 10,left: 13),
+              padding: EdgeInsets.only(top: 3.2.h, left: 2.2.h),
               child: Row(
                 children: [
                   Checkboxx(),
                   Text(
                     'Agree with ',
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500, fontSize: 11.1.sp),
                   ),
                   Text(
                     "Terms&Condition",
                     style: TextStyle(
                         color: Colors.red,
-                        fontSize: 14,
+                        fontSize: 11.1.sp,
                         decoration: TextDecoration.underline,
                         fontWeight: FontWeight.w500),
                   ),
@@ -83,6 +88,46 @@ class CreatePage extends StatelessWidget {
                   child: ContainerButton(name: 'Sign Up')),
             ),
             DividerUp(name: 'Or sign up with'),
+            SizedBox(
+              height: 3.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 2.4.h,
+                  backgroundImage: AssetImage('assets/images/GoogleImg.PNG'),
+                ),
+                // CircleAvatar(
+                //   backgroundImage: AssetImage('assets/images/fb.PNG'),
+                // ),
+              ],
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  style:
+                      //  Theme.of(context)
+                      //     .textTheme
+                      //     .displaySmall
+                      //     ?.copyWith(color: const Color.fromARGB(66, 158, 120, 120))
+                      TextStyle(fontSize: 1.6.h, fontWeight: FontWeight.bold),
+                  "Already have an account? ",
+                ),
+                Text(
+                  "Sign in",
+                  style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Colors.red,
+                      fontSize: 1.6.h,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           ],
         ),
       ),
