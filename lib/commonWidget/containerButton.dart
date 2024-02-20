@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class ContainerButton extends StatelessWidget {
-  final name;
+  final String name;
+
   const ContainerButton({
+    // required this.bool,
     required this.name,
     super.key,
   });

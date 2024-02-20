@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mainproject/CommonWidget/TextForm.dart';
 import 'package:mainproject/CommonWidget/containerButton.dart';
+import 'package:mainproject/View/pages/locationPage.dart';
 import 'package:sizer/sizer.dart';
 
 class NewPasswordPage extends StatelessWidget {
@@ -72,6 +73,9 @@ class NewPasswordPage extends StatelessWidget {
           ),
           GestureDetector(
               onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LocationPage();
+                }));
                 print("Creat New Password");
               },
               child: ContainerButton(name: 'Creat New Password')),

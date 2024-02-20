@@ -6,8 +6,8 @@ import 'package:mainproject/View/Auth/createPage.dart';
 import 'package:mainproject/View/Auth/signInPage.dart';
 import 'package:sizer/sizer.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class SplashScreen1  extends StatelessWidget {
+  const SplashScreen1({super.key});
 
   @override
   Widget build(BuildContext context) {

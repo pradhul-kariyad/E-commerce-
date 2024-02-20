@@ -3,9 +3,8 @@ import 'package:mainproject/CommonWidget/containerButton.dart';
 import 'package:mainproject/CommonWidget/TextForm.dart';
 import 'package:mainproject/CommonWidget/checkBox.dart';
 import 'package:mainproject/CommonWidget/dividerUp.dart';
-import 'package:mainproject/View/SpashScreen/homePage.dart';
-// import 'package:mainproject/View/SpashScreen/homePage.dart';
-// import 'package:mainproject/View/homePage.dart';
+import 'package:mainproject/View/Home/homePage.dart';
+import 'package:mainproject/View/SplashScreen/SplashScreen1.dart';
 // import 'package:mainproject/View/homePage.dart';
 import 'package:sizer/sizer.dart';
 
