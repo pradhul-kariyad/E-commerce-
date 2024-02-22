@@ -9,6 +9,7 @@ import 'package:mainproject/View/SplashScreen/SplashScreen1.dart';
 import 'package:mainproject/View/pages/locationOpenPage.dart';
 import 'package:mainproject/View/pages/locationPage.dart';
 import 'package:mainproject/View/pages/notificationPage.dart';
+// import 'package:mainproject/ListViewUser/listViewBuilder1.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
           //               TextTheme(bodyLarge: TextStyle(), displaySmall: TextStyle()),
           //           iconTheme: IconThemeData(color: Colors.black)),
           debugShowCheckedModeBanner: false,
-          home: SplashScreen1(),
+          home: HomePage(),
         );
       },
     );

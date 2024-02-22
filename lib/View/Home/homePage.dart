@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mainproject/Colors/colors.dart';
+import 'package:mainproject/CommonWidget/stackCategory.dart';
 import 'package:mainproject/View/Pageview/page1.dart';
 import 'package:mainproject/View/Pageview/page2.dart';
 import 'package:mainproject/View/Pageview/page3.dart';
@@ -13,6 +14,22 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: NavigationBar(
+          indicatorColor: ColorData.greyColor,
+          backgroundColor: ColorData.whiteColor,
+          destinations: [
+            IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.home_outlined,
+                  size: 24.sp,
+                )),
+            IconButton(
+                onPressed: () {}, icon: Icon(Icons.favorite_border_rounded)),
+            IconButton(
+                onPressed: () {}, icon: Icon(Icons.card_travel_outlined)),
+            IconButton(onPressed: () {}, icon: Icon(Icons.contacts_rounded)),
+          ]),
       body: SingleChildScrollView(
           child: Column(
         children: [
@@ -174,6 +191,49 @@ class HomePage extends StatelessWidget {
                   activeDotColor: ColorData.redColor),
               controller: _pageController,
               count: 3),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 2.h),
+                child: Text(
+                  "Category",
+                  style: TextStyle(
+                      color: ColorData.blackColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.sp),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 2.h),
+                child: Text(
+                  "See All",
+                  style: TextStyle(
+                      color: ColorData.redColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13.sp),
+                ),
+              ),
+            ],
+          ),
+
+          Padding(
+            padding: EdgeInsets.only(top: 1.h, left: 0.w),
+            child: StackCategory(),
+          ),
+
+          // Padding(
+          //   padding: EdgeInsets.only(left: 3.w, top: 3.h, right: 5.w),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //     children: [
+          //       Text("Clothes"),
+          //       Text("Electronics"),
+          //       Text("Shoes"),
+          //       Text("Watch"),
+          //     ],
+          //   ),
+          // ),
         ],
       )),
     );
