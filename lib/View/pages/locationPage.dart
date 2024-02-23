@@ -57,7 +57,7 @@ class LocationPage extends StatelessWidget {
             padding: EdgeInsets.only(top: 8.h, bottom: 3.2.h),
             child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return HomePage();
                   }));
                   print("location access");

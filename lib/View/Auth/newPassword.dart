@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mainproject/CommonWidget/TextForm.dart';
 import 'package:mainproject/CommonWidget/containerButton.dart';
-import 'package:mainproject/View/pages/locationPage.dart';
+import 'package:mainproject/View/Pages/locationPage.dart';
 import 'package:sizer/sizer.dart';
 
 class NewPasswordPage extends StatelessWidget {

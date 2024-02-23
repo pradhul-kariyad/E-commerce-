@@ -21,7 +21,10 @@ class Page3 extends StatelessWidget {
                 ),
               ],
               color: ColorData.redColor,
-              borderRadius: BorderRadius.circular(20)),
+              borderRadius: BorderRadius.circular(20),
+              image: DecorationImage(
+                  image: AssetImage("assets/images/(4).PNG"),
+                  fit: BoxFit.cover)),
           width: 95.w,
           height: 24.h,
         ),
