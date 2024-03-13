@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mainproject/colors/colors.dart';
 import 'package:sizer/sizer.dart';
 
 class ContainerButton extends StatelessWidget {
@@ -13,17 +14,20 @@ class ContainerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // ignore: sort_child_properties_last
       child: Center(
         child: Text(
           name,
           style: TextStyle(
-              fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
+              fontSize: 12.sp,
+              color: ColorData.white,
+              fontWeight: FontWeight.bold),
         ),
       ),
       width: 86.w,
       height: 6.5.h,
       decoration: BoxDecoration(
-          color: Colors.red, borderRadius: BorderRadius.circular(14)),
+          color: ColorData.red, borderRadius: BorderRadius.circular(14)),
     );
   }
 }

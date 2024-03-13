@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mainproject/Colors/colors.dart';
+import 'package:mainproject/colors/colors.dart';
 
 class FontData {
   static TextStyle fontBold = 
-      TextStyle(color: ColorData.redColor, fontWeight: FontWeight.bold);
+      TextStyle(color: ColorData.red, fontWeight: FontWeight.bold);
   static TextStyle font500 = TextStyle(fontWeight: FontWeight.w500);
 }
 // class Sontaaa {

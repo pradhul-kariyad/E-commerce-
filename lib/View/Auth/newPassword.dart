@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mainproject/CommonWidget/TextForm.dart';
-import 'package:mainproject/CommonWidget/containerButton.dart';
-import 'package:mainproject/View/Pages/locationPage.dart';
+import 'package:mainproject/commonWidget/TextForm.dart';
+import 'package:mainproject/commonWidget/containerButton.dart';
+import 'package:mainproject/view/pages/locationPage.dart';
 import 'package:sizer/sizer.dart';
 
 class NewPasswordPage extends StatelessWidget {
@@ -59,14 +59,14 @@ class NewPasswordPage extends StatelessWidget {
           ),
           TextForm(
             name: 'Password',
-            icon: (Icons.remove_red_eye_outlined),
+            icon: (Icons.remove_red_eye_outlined), controller: null,
           ),
           SizedBox(
             height: 1.4.h,
           ),
           TextForm(
             name: 'Confirm Password',
-            icon: (Icons.remove_red_eye_outlined),
+            icon: (Icons.remove_red_eye_outlined), controller: null,
           ),
           SizedBox(
             height: 6.h,

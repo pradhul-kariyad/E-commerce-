@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mainproject/CommonWidget/containerButton.dart';
-import 'package:mainproject/View/Home/homePage.dart';
+import 'package:mainproject/commonWidget/containerButton.dart';
+import 'package:mainproject/view/home/homePage.dart';
 import 'package:sizer/sizer.dart';
 
 class LocationPage extends StatelessWidget {
@@ -17,6 +17,7 @@ class LocationPage extends StatelessWidget {
           ),
           Center(
               child: CircleAvatar(
+                  // ignore: sort_child_properties_last
                   child: Icon(
                     Icons.location_on_rounded,
                     color: Colors.red,
@@ -60,6 +61,7 @@ class LocationPage extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return HomePage();
                   }));
+                  // ignore: avoid_print
                   print("location access");
                 },
                 child: ContainerButton(name: "Allow Location Access")),

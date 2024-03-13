@@ -1,15 +1,26 @@
+// ignore_for_file: unused_import
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:mainproject/CommonWidget/containerButton.dart';
-import 'package:mainproject/CommonWidget/TextForm.dart';
-import 'package:mainproject/CommonWidget/checkBox.dart';
-import 'package:mainproject/CommonWidget/dividerUp.dart';
-import 'package:mainproject/View/Home/homePage.dart';
-import 'package:mainproject/View/SplashScreen/SplashScreen1.dart';
-// import 'package:mainproject/View/homePage.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mainproject/commonWidget/containerButton.dart';
+import 'package:mainproject/view/splashScreen/SplashScreen1.dart';
+import 'package:mainproject/commonWidget/TextForm.dart';
+import 'package:mainproject/commonWidget/checkBox.dart';
+import 'package:mainproject/commonWidget/dividerUp.dart';
+import 'package:mainproject/view/auth/otpVerification.dart';
+import 'package:mainproject/view/home/homePage.dart';
+
 import 'package:sizer/sizer.dart';
 
 class CreatePage extends StatelessWidget {
-  const CreatePage({super.key});
+  CreatePage({super.key});
+  final nameController = TextEditingController();
+  final mailController = TextEditingController();
+  final phnoController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +29,7 @@ class CreatePage extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 9.h),
+              padding: EdgeInsets.only(top: 8.h),
               child: Center(
                 child: Text(
                   'Create Account',
@@ -30,7 +41,7 @@ class CreatePage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 3.h,
+              height: 2.h,
             ),
             Text(
               'Fill your information below or register',
@@ -47,16 +58,34 @@ class CreatePage extends StatelessWidget {
                   color: const Color.fromARGB(255, 209, 207, 207)),
             ),
             SizedBox(
-              height: 3.h,
+              height: 1.h,
             ),
-            TextForm(name: 'Name'),
-            TextForm(name: 'Email'),
-            TextForm(name: 'Password', icon: Icons.remove_red_eye_outlined),
+            TextForm(
+              // obscureText: false,
+              name: 'Name',
+              controller: nameController,
+            ),
+            TextForm(
+              // obscureText: false,
+              name: 'Email',
+              controller: mailController,
+            ),
+            TextForm(
+              // obscureText: false,
+              name: 'Phone Number',
+              controller: phnoController,
+            ),
+            TextForm(
+              // obscureText: true,
+              name: 'Password',
+              icon: Icons.remove_red_eye_outlined,
+              controller: passwordController,
+            ),
             // SizedBox(
             //   height: 10,
             // ),
             Padding(
-              padding: EdgeInsets.only(top: 3.2.h, left: 2.2.h),
+              padding: EdgeInsets.only(top: 1.h, left: 2.2.h),
               child: Row(
                 children: [
                   Checkboxx(),
@@ -77,20 +106,23 @@ class CreatePage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              padding: EdgeInsets.only(top: 1.h, bottom: 2.h),
               child: GestureDetector(
                   onTap: () {
+                    // ignore: avoid_print
                     print('SIGN UP PAGE');
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return HomePage();
-                    }));
+                    signUp(
+                        phnoController.text,
+                        nameController.text.toString(),
+                        mailController.text.toString(),
+                        passwordController.text.trim(),
+                        context);
                   },
                   child: ContainerButton(name: 'Sign Up')),
             ),
             DividerUp(name: 'Or sign up with'),
             SizedBox(
-              height: 3.h,
+              height: 1.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -133,5 +165,48 @@ class CreatePage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> signUp(String phoneNumber, String name, String email, password,
+    BuildContext context) async {
+  try {
+    log("Sending sign-up request...");
+
+    var response = await http.post(
+      Uri.parse('http://192.168.29.185:3000/flutter/fuser_registration'),
+      body: {
+        'phoneno': phoneNumber,
+        'name': name,
+        'email': email,
+        'password': password,
+      },
+    );
+
+    log('Response status code: ${response.statusCode}');
+    log('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      log("Sign-up successful");
+      var result = jsonDecode(response.body);
+      String? userid = result['userid'];
+      if (userid != null) {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        await pref.setString('userid', userid);
+        // ignore: use_build_context_synchronously
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return OtpVarification();
+        }));
+      }
+      // var result = jsonDecode(response.body);
+      // String? token = result['token'];
+
+      // log(token.toString() + "uytrererrrrrrrrrrrr");
+    } else {
+      log("Sign-up failed with status code: ${response.statusCode}");
+      // Show an error message or handle the failure scenario
+    }
+  } catch (e) {
+    log('Error during sign-up: $e');
   }
 }

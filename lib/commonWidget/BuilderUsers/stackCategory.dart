@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mainproject/Colors/colors.dart';
-import 'package:mainproject/CommonWidget/BuilderUsers/listviewUsers.dart';
+import 'package:mainproject/colors/colors.dart';
+import 'package:mainproject/commonWidget/builderUsers/listviewUsers.dart';
 import 'package:sizer/sizer.dart';
 
 class StackCategory extends StatelessWidget {
@@ -25,7 +25,7 @@ class StackCategory extends StatelessWidget {
                     padding: EdgeInsets.only(left: 4.w, top: 2.h, right: 4.w),
                     child: CircleAvatar(
                       // backgroundImage: AssetImage(user[index].img),
-                      backgroundColor: ColorData.greyColor,
+                      backgroundColor: ColorData.grey,
                       radius: 25.sp,
                       child: CircleAvatar(
                         radius: 16.sp,
@@ -39,7 +39,7 @@ class StackCategory extends StatelessWidget {
                       user[index].category,
                       style: TextStyle(
                           fontSize: 10.sp,
-                          color: ColorData.blackColor,
+                          color: ColorData.black,
                           fontWeight: FontWeight.w500),
                     ),
                   ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mainproject/CommonWidget/containerButton.dart';
+import 'package:mainproject/commonWidget/containerButton.dart';
 import 'package:sizer/sizer.dart';
 
 class NotificationPage extends StatelessWidget {
@@ -16,6 +16,7 @@ class NotificationPage extends StatelessWidget {
           ),
           Center(
               child: CircleAvatar(
+                  // ignore: sort_child_properties_last
                   child: Icon(
                     Icons.add_alert_sharp,
                     color: Colors.red,
@@ -56,6 +57,7 @@ class NotificationPage extends StatelessWidget {
             padding: EdgeInsets.only(top: 8.h, bottom: 3.2.h),
             child: GestureDetector(
                 onTap: () {
+                  // ignore: avoid_print
                   print("notification access");
                 },
                 child: ContainerButton(name: "Allow Notification")),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mainproject/Colors/colors.dart';
+import 'package:mainproject/colors/colors.dart';
 import 'package:sizer/sizer.dart';
 
 class Page3 extends StatelessWidget {
@@ -20,7 +20,7 @@ class Page3 extends StatelessWidget {
                   offset: Offset(3, 2), // changes position of shadow
                 ),
               ],
-              color: ColorData.redColor,
+              color: ColorData.red,
               borderRadius: BorderRadius.circular(20),
               image: DecorationImage(
                   image: AssetImage("assets/images/(4).PNG"),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mainproject/Colors/colors.dart';
-import 'package:mainproject/CommonWidget/BuilderUsers/listviewUsers.dart';
+import 'package:mainproject/colors/colors.dart';
+import 'package:mainproject/commonWidget/builderUsers/listviewUsers.dart';
 import 'package:sizer/sizer.dart';
 
 class StackCategory2 extends StatelessWidget {
@@ -33,7 +33,7 @@ class StackCategory2 extends StatelessWidget {
                           width: 40.w,
                           height: 18.h,
                           decoration: BoxDecoration(
-                              border: Border.all(color: ColorData.wgreyColor),
+                              border: Border.all(color: ColorData.wgrey),
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(6),
                                   topRight: Radius.circular(6)),
@@ -58,7 +58,7 @@ class StackCategory2 extends StatelessWidget {
                           top: 17.9.h,
                           child: Container(
                             decoration: BoxDecoration(
-                                border: Border.all(color: ColorData.wgreyColor),
+                                border: Border.all(color: ColorData.wgrey),
                                 // color: ColorData.greyColor,
                                 borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(6),
@@ -112,7 +112,8 @@ class StackCategory2 extends StatelessWidget {
                           child: Text(
                             users[index].name,
                             style: TextStyle(
-                                color: (Colors.black),
+                                overflow: TextOverflow.ellipsis,
+                                color: ColorData.black,
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.w500),
                           ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mainproject/CommonWidget/containerButton.dart';
-import 'package:mainproject/CommonWidget/verificationForm.dart';
-import 'package:mainproject/View/Auth/newPassword.dart';
+import 'package:mainproject/commonWidget/containerButton.dart';
+import 'package:mainproject/commonWidget/verificationForm.dart';
+import 'package:mainproject/view/auth/newPassword.dart';
 import 'package:sizer/sizer.dart';
 
 class OtpVarification extends StatelessWidget {
@@ -60,11 +60,31 @@ class OtpVarification extends StatelessWidget {
             ),
             Form(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  SizedBox(
+                    width: 10.w,
+                  ),
                   VerificationForm(),
+                  SizedBox(
+                    width: 2.w,
+                  ),
                   VerificationForm(),
+                  SizedBox(
+                    width: 2.w,
+                  ),
                   VerificationForm(),
+                  SizedBox(
+                    width: 2.w,
+                  ),
+                  VerificationForm(),
+                  SizedBox(
+                    width: 2.w,
+                  ),
+                  VerificationForm(),
+                  SizedBox(
+                    width: 2.w,
+                  ),
                   VerificationForm(),
                 ],
               ),
@@ -95,7 +115,7 @@ class OtpVarification extends StatelessWidget {
             ),
             GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return NewPasswordPage();
                   }));
                   // print("OtpVarification");

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mainproject/Colors/colors.dart';
+import 'package:mainproject/colors/colors.dart';
 import 'package:sizer/sizer.dart';
 
 class LocationOPenPage extends StatelessWidget {
@@ -45,7 +45,7 @@ class LocationOPenPage extends StatelessWidget {
               height: 6.h,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: ColorData.greyColor),
+                  color: ColorData.grey),
               child: TextFormField(
                 decoration: InputDecoration(
                     // hintText: "your location",
@@ -55,7 +55,7 @@ class LocationOPenPage extends StatelessWidget {
                         icon: Icon(
                           Icons.backspace_outlined,
                           size: 15.sp,
-                          color: ColorData.redColor,
+                          color: ColorData.red,
                         )),
                     prefixIcon: IconButton(
                         onPressed: () {},

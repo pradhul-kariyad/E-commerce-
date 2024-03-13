@@ -1,9 +1,11 @@
+// ignore_for_file: unused_import
+
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:mainproject/CommonWidget/containerButton.dart';
-import 'package:mainproject/View/Auth/createPage.dart';
-import 'package:mainproject/View/Auth/signInPage.dart';
+import 'package:mainproject/commonWidget/containerButton.dart';
+import 'package:mainproject/view/auth/createPage.dart';
+import 'package:mainproject/view/auth/signInPage.dart';
 import 'package:sizer/sizer.dart';
 
 class SplashScreen1 extends StatelessWidget {
@@ -21,35 +23,29 @@ class SplashScreen1 extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(top: 1.h, left: 3.w),
-                    child: Container(
-                      child: Column(
-                        children: [
-                          firstRow('assets/images/cameraa2.PNG'),
-                          firstRow('assets/images/iphone123.PNG'),
-                        ],
-                      ),
+                    child: Column(
+                      children: [
+                        firstRow('assets/images/cameraa2.PNG'),
+                        firstRow('assets/images/iphone123.PNG'),
+                      ],
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 7.h, left: 3.w, bottom: 2.h),
-                    child: Container(
-                      child: Column(
-                        children: [
-                          secondRow('assets/images/hoodie.PNG', 145, 226),
-                          secondRow('assets/images/iwatch.PNG', 90, 120),
-                        ],
-                      ),
+                    child: Column(
+                      children: [
+                        secondRow('assets/images/hoodie.PNG', 145, 226),
+                        secondRow('assets/images/iwatch.PNG', 90, 120),
+                      ],
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 20.h, left: 1.w, bottom: 1.h),
-                    child: Container(
-                      child: Column(
-                        children: [
-                          thirdRow('assets/images/water bottle.PNG'),
-                          thirdRow('assets/images/headSet.PNG'),
-                        ],
-                      ),
+                    child: Column(
+                      children: [
+                        thirdRow('assets/images/water bottle.PNG'),
+                        thirdRow('assets/images/headSet.PNG'),
+                      ],
                     ),
                   ),
                 ],
