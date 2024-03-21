@@ -3,8 +3,10 @@ import 'package:mainproject/colors/colors.dart';
 import 'package:sizer/sizer.dart';
 
 class Page1 extends StatelessWidget {
-  const Page1({super.key});
-
+  const Page1({super.key,
+  //  required this.image
+   });
+  //  final String  image ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

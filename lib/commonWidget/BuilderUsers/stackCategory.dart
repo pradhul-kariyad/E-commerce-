@@ -28,6 +28,7 @@ class StackCategory extends StatelessWidget {
                       backgroundColor: ColorData.grey,
                       radius: 25.sp,
                       child: CircleAvatar(
+                        backgroundColor: ColorData.grey,
                         radius: 16.sp,
                         backgroundImage: AssetImage(user[index].img),
                       ),

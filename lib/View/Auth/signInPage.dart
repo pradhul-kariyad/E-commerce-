@@ -1,127 +1,159 @@
+// ignore_for_file: unused_import, await_only_futures, use_build_context_synchronously
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/commonWidget/TextForm.dart';
 import 'package:mainproject/commonWidget/containerButton.dart';
 import 'package:mainproject/commonWidget/dividerUp.dart';
+import 'package:mainproject/model/homepagemodel.dart';
 import 'package:mainproject/view/auth/createPage.dart';
+import 'package:mainproject/commonWidget/ipaddress.dart';
+import 'package:mainproject/view/auth/otpVerification1.dart';
 import 'package:mainproject/view/auth/otpVerification.dart';
 import 'package:mainproject/view/home/homePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
-class SignInPage extends StatelessWidget {
-  SignInPage({Key? key}) : super(key: key);
+class SignInPage extends StatefulWidget {
+  final void Function()? onTap;
+  const SignInPage({
+    Key? key,
+    this.onTap,
+  }) : super(key: key);
 
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
   final mailController = TextEditingController();
   final passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 15.h, bottom: 2.h),
-              child: Center(
-                child: Text(
-                  "Sign In",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 25.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-            Text(
-              "Hi! Welcome back, you've been missed",
-              style: TextStyle(
-                fontSize: 11.sp,
-                fontWeight: FontWeight.w400,
-                color: const Color.fromARGB(255, 209, 207, 207),
-              ),
-            ),
-            SizedBox(height: 7.h),
-            TextForm(name: 'Email', controller: mailController),
-            
-            SizedBox(height: 1.h),
-            TextForm(
-              name: 'Password',
-              controller: passwordController,
-              icon: Icons.remove_red_eye_rounded,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 54.w, top: 1.3.h),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => OtpVarification()),
-                  );
-                },
-                child: Text(
-                  'Forgot Password?',
-                  style: TextStyle(
-                    fontSize: 11.sp,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.red,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 8.h),
-              child: GestureDetector(
-                onTap: () {
-                  signIn(
-                      mailController.text, passwordController.text, context);
-                },
-                child: ContainerButton(name: 'Sign In'),
-              ),
-            ),
-            SizedBox(height: 5.h),
-            DividerUp(name: 'Or sign in with'),
-            SizedBox(height: 3.h),
-            Center(
-              child: CircleAvatar(
-                radius: 2.4.h,
-                backgroundImage: AssetImage('assets/images/GoogleImg.PNG'),
-              ),
-            ),
-            SizedBox(height: 4.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Don't have an account? ",
-                  style:
-                      TextStyle(fontSize: 1.6.h, fontWeight: FontWeight.bold),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CreatePage()),
-                    );
-                  },
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 10.h, bottom: 2.h),
+                child: Center(
                   child: Text(
-                    "Sign Up ",
+                    "Sign In",
                     style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      color: Colors.red,
-                      fontSize: 1.6.h,
-                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 25.sp,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              Text(
+                "Hi! Welcome back, you've been missed",
+                style: TextStyle(
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w400,
+                  color: const Color.fromARGB(255, 209, 207, 207),
+                ),
+              ),
+              SizedBox(height: 6.h),
+              TextForm(
+                  validator: (value) {
+                    return !value!.contains('@gmail.com')
+                        ? 'Please enter a valid email'
+                        : null;
+                  },
+                  name: 'Email',
+                  controller: mailController),
+              SizedBox(height: 1.h),
+              TextForm(
+                validator: (value) {
+                  return value!.length < 6
+                      ? 'Must be at least 6 character'
+                      : null;
+                },
+                name: 'Password',
+                controller: passwordController,
+                icon: Icons.remove_red_eye_rounded,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 54.w, top: 1.3.h),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OtpVarification()),
+                    );
+                  },
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.red,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 9.h),
+                child: GestureDetector(
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      signIn(mailController.text, passwordController.text,
+                          context);
+                    }
+                  },
+                  child: ContainerButton(name: 'Sign In'),
+                ),
+              ),
+              SizedBox(height: 5.h),
+              DividerUp(name: 'Or sign in with'),
+              SizedBox(height: 2.h),
+              Center(
+                child: CircleAvatar(
+                  backgroundColor: ColorData.white,
+                  radius: 2.4.h,
+                  backgroundImage: AssetImage('assets/images/GoogleImg.PNG'),
+                ),
+              ),
+              SizedBox(height: 2.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account? ",
+                    style:
+                        TextStyle(fontSize: 1.6.h, fontWeight: FontWeight.bold),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CreatePage()),
+                      );
+                    },
+                    child: Text(
+                      "Sign Up ",
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Colors.red,
+                        fontSize: 1.6.h,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -133,7 +165,8 @@ class SignInPage extends StatelessWidget {
       log("Sending login request...");
 
       var response = await http.post(
-        Uri.parse('http://192.168.29.185:3000/flutter/fuser_signin'),
+        // ignore: unnecessary_brace_in_string_interps
+        Uri.parse('http://${ip}:3000/flutter/fuser_signin'),
         body: {'email': email, 'password': password},
       );
 
@@ -141,6 +174,24 @@ class SignInPage extends StatelessWidget {
       log('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
+        // showDialog(
+        //   context: context,
+        //   builder: (context) => AlertDialog(
+        //     title: Text('Sign-in successful...'),
+        //     actions: [
+        //       TextButton(
+        //         onPressed: () {
+        //           Navigator.of(context).pop();
+        //         },
+        //         child: Text('OK'),
+        //       ),
+        //     ],
+        //   ),
+        // );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: ColorData.red,
+            content: Text("Sign-in successful...")));
+
         log("Sign-in successful");
         var result = jsonDecode(response.body);
         String? token = result['token'];
@@ -148,9 +199,10 @@ class SignInPage extends StatelessWidget {
         if (token != null) {
           SharedPreferences pref = await SharedPreferences.getInstance();
           await pref.setString('token', token);
+          await pref.setBool('userlogin', true);
           // ignore: avoid_print, unnecessary_brace_in_string_interps
           print('local store: ${pref}');
-          // ignore: use_build_context_synchronously
+          homeData();
           Navigator.pushReplacement(
             // Use pushReplacement to replace the current route with the home page
             context,
@@ -158,9 +210,25 @@ class SignInPage extends StatelessWidget {
                 builder: (context) => HomePage()), // Navigate to the HomePage
           );
         }
-      } else {
+      } else if (response.statusCode == 400) {
+        var responseBody = jsonDecode(response.body);
+        if (responseBody['error'] == 'Invalid email') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: ColorData.red, content: Text("Invalid email")));
+        } else if (responseBody['error'] == 'Invalid password') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: ColorData.red,
+              content: Text("Invalid Password")));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: ColorData.red, content: Text("Invalid Email")));
+        }
         log("Sign-in failed with status code: ${response.statusCode}");
-        // Show an error message or handle the failure scenario
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: ColorData.red,
+            content: Text("Sign-in failed...")));
+        log("Sign-in failed with status code: ${response.statusCode}");
       }
     } catch (e) {
       log('Error during sign-in: $e');

@@ -47,3 +47,4 @@ List users = [
   Users("Puma", "5.5", "assets/images/headSet.PNG", "subName", "9,000"),
   Users("name", "5.5", "assets/images/cameraa2.PNG", "subName", "10,000"),
 ];
+

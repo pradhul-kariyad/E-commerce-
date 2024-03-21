@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/commonWidget/builderUsers/stackCategory.dart';
 import 'package:mainproject/commonWidget/builderUsers/stackCategory2.dart';
+import 'package:mainproject/view/auth/signInPage.dart';
 import 'package:mainproject/view/pageview/page1.dart';
 import 'package:mainproject/view/pageview/page2.dart';
 import 'package:mainproject/view/pageview/page3.dart';
@@ -132,7 +133,12 @@ class HomePage extends StatelessWidget {
                               color: Color.fromARGB(255, 205, 204, 204)),
                           border: InputBorder.none,
                           prefixIcon: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return SignInPage();
+                                }));
+                              },
                               icon: Icon(
                                 Icons.manage_search_outlined,
                                 color: ColorData.red,
@@ -192,17 +198,22 @@ class HomePage extends StatelessWidget {
             ],
           ),
           SizedBox(
-            width: 100.w,
-            height: 29.h,
-            child: PageView(
-              controller: _pageController,
-              children: [
-                Page1(),
-                Page2(),
-                Page3(),
-              ],
-            ),
-          ),
+              width: 100.w,
+              height: 29.h,
+              child: PageView(
+                controller: _pageController,
+                children: [Page1(), Page2(), Page3()],
+              )
+              //  PageView.builder(
+              //   controller: _pageController,
+              //   // itemCount: ,
+              //   itemBuilder: (context, index) {
+              //     Page1(image: "");
+
+              //   },
+
+              // ),
+              ),
           SmoothPageIndicator(
               axisDirection: Axis.horizontal,
               //effect: WormEffect,
