@@ -7,7 +7,7 @@ import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/commonWidget/TextForm.dart';
 import 'package:mainproject/commonWidget/containerButton.dart';
 import 'package:mainproject/commonWidget/dividerUp.dart';
-import 'package:mainproject/model/homepagemodel.dart';
+import 'package:mainproject/model/homeData.dart';
 import 'package:mainproject/view/auth/createPage.dart';
 import 'package:mainproject/commonWidget/ipaddress.dart';
 import 'package:mainproject/view/auth/otpVerification1.dart';
@@ -31,6 +31,7 @@ class _SignInPageState extends State<SignInPage> {
   final mailController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  late String _email;
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +65,25 @@ class _SignInPageState extends State<SignInPage> {
               SizedBox(height: 6.h),
               TextForm(
                   validator: (value) {
-                    return !value!.contains('@gmail.com')
-                        ? 'Please enter a valid email'
-                        : null;
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    String pattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
+                    RegExp regExp = new RegExp(pattern);
+                    if (!regExp.hasMatch(value!)) {
+                      return 'Enter a valid email';
+                    }
+                    return null;
                   },
+                  onSaved: (value) {
+                    _email = value;
+                  },
+
+                  //  (value) {
+                  //   return !value!.contains('@gmail.com')
+                  //       ? 'Please enter a valid email'
+                  //       : null;
+                  // },
                   name: 'Email',
                   controller: mailController),
               SizedBox(height: 1.h),
@@ -80,6 +96,7 @@ class _SignInPageState extends State<SignInPage> {
                 name: 'Password',
                 controller: passwordController,
                 icon: Icons.remove_red_eye_rounded,
+                onSaved: (value) {},
               ),
               Padding(
                 padding: EdgeInsets.only(left: 54.w, top: 1.3.h),
@@ -125,22 +142,22 @@ class _SignInPageState extends State<SignInPage> {
                 ),
               ),
               SizedBox(height: 2.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don't have an account? ",
-                    style:
-                        TextStyle(fontSize: 1.6.h, fontWeight: FontWeight.bold),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CreatePage()),
-                      );
-                    },
-                    child: Text(
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CreatePage()),
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account? ",
+                      style: TextStyle(
+                          fontSize: 1.6.h, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
                       "Sign Up ",
                       style: TextStyle(
                         decoration: TextDecoration.underline,
@@ -149,8 +166,8 @@ class _SignInPageState extends State<SignInPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -202,7 +219,7 @@ class _SignInPageState extends State<SignInPage> {
           await pref.setBool('userlogin', true);
           // ignore: avoid_print, unnecessary_brace_in_string_interps
           print('local store: ${pref}');
-          homeData();
+          // homeData();
           Navigator.pushReplacement(
             // Use pushReplacement to replace the current route with the home page
             context,

@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, unnecessary_new, must_be_immutable, unused_field
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
@@ -7,6 +7,7 @@ import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/commonWidget/pinputVerification/pinputverification.dart';
 import 'package:mainproject/commonWidget/ipaddress.dart';
 import 'package:mainproject/view/auth/otpVerification.dart';
+import 'package:mainproject/view/auth/signInPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mainproject/commonWidget/containerButton.dart';
 import 'package:mainproject/view/splashScreen/SplashScreen1.dart';
@@ -25,6 +26,7 @@ class CreatePage extends StatelessWidget {
   final phnoController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  late String _email;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,15 +106,30 @@ class CreatePage extends StatelessWidget {
                 // obscureText: false,
                 // labelText: 'Name',
                 name: 'Name',
-                controller: nameController,
+                controller: nameController, onSaved: (value) {},
               ),
               TextForm(
                 // labelText: 'Email',
                 validator: (value) {
-                  return !value!.contains('@gmail.com')
-                      ? 'Please enter a valid email'
-                      : null;
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  String pattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
+                  RegExp regExp = new RegExp(pattern);
+                  if (!regExp.hasMatch(value!)) {
+                    return 'Enter a valid email';
+                  }
+                  return null;
                 },
+                onSaved: (value) {
+                  _email = value;
+                },
+
+                // (value) {
+                //   return !value!.contains('@gmail.com')
+                //       ? 'Please enter a valid email'
+                //       : null;
+                // },
                 name: 'Email',
                 controller: mailController,
               ),
@@ -125,7 +142,7 @@ class CreatePage extends StatelessWidget {
                 },
                 // obscureText: false,
                 name: 'Phone Number',
-                controller: phnoController,
+                controller: phnoController, onSaved: (value) {},
                 // labelText: 'Phone Number',
               ),
               TextForm(
@@ -139,7 +156,7 @@ class CreatePage extends StatelessWidget {
                 name: 'Password',
                 // labelText: 'Password',
                 icon: Icons.remove_red_eye_outlined,
-                controller: passwordController,
+                controller: passwordController, onSaved: (value) {},
               ),
               // SizedBox(
               //   height: 10,
@@ -200,30 +217,37 @@ class CreatePage extends StatelessWidget {
               SizedBox(
                 height: 2.h,
               ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 2.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      style:
-                          //  Theme.of(context)
-                          //     .textTheme
-                          //     .displaySmall
-                          //     ?.copyWith(color: const Color.fromARGB(66, 158, 120, 120))
-                          TextStyle(
-                              fontSize: 1.6.h, fontWeight: FontWeight.bold),
-                      "Already have an account? ",
-                    ),
-                    Text(
-                      "Sign in",
-                      style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: Colors.red,
-                          fontSize: 1.6.h,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return SignInPage();
+                  }));
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 2.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        style:
+                            //  Theme.of(context)
+                            //     .textTheme
+                            //     .displaySmall
+                            //     ?.copyWith(color: const Color.fromARGB(66, 158, 120, 120))
+                            TextStyle(
+                                fontSize: 1.6.h, fontWeight: FontWeight.bold),
+                        "Already have an account? ",
+                      ),
+                      Text(
+                        "Sign in",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.red,
+                            fontSize: 1.6.h,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

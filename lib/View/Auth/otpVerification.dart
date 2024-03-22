@@ -130,7 +130,10 @@ class _PinputExampleState extends State<PinputExample> {
                     defaultPinTheme: defaultPinTheme,
                     separatorBuilder: (index) => const SizedBox(width: 8),
                     validator: (value) {
-                      return 'Pin is incorrect';
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your pin';
+                      }
+                      return null;
                     },
                     // onClipboardFound: (value) {
                     //   debugPrint('onClipboardFound: $value');

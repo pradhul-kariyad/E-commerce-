@@ -13,6 +13,7 @@ class TextForm extends StatelessWidget {
     super.key,
     required this.controller,
     this.validator,
+    required Null Function(dynamic value) onSaved,
     // required this.obscureText
   });
 
@@ -24,7 +25,7 @@ class TextForm extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(
             bottom: 1.h,
-            top: 3.h,
+            top: 1.h,
             left: 1.w,
           ),
           child: Text(
@@ -52,21 +53,39 @@ class TextForm extends StatelessWidget {
             // obscureText: obscureText,
             controller: controller,
             decoration: InputDecoration(
-              
-                suffixIcon: IconButton(
-                    onPressed: () {
-                      // ignore: avoid_print
-                      print('password Icon');
-                    },
-                    icon: Icon(icon)),
-                // Icon(
-                //   icon,
-                //   // color: Colors.black,
-                //   size: 22,
-                // ),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: ColorData.wgrey)),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: ColorData.wgrey),
+                  borderRadius: BorderRadius.circular(14)),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: ColorData.wgrey)),
+              fillColor: ColorData.wgrey,
+              filled: true,
+              // focusedBorder: OutlineInputBorder(
+              //     borderSide: BorderSide(color: ColorData.wgrey)),
+              suffixIcon: IconButton(
+                  onPressed: () {
+                    // ignore: avoid_print
+                    print('password Icon');
+                  },
+                  icon: Icon(icon)),
+              // Icon(
+              //   icon,
+              //   // color: Colors.black,
+              //   size: 22,
+              // ),
+              // border: OutlineInputBorder(
+              //     borderRadius: BorderRadius.circular(10),
+              //     borderSide: BorderSide(color: ColorData.wgrey))),)
+            ),
           ),
         ),
+        SizedBox(
+          height: 2.h,
+        )
       ],
     );
   }

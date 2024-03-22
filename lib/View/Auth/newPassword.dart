@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
@@ -66,6 +66,10 @@ class NewPasswordPage extends StatelessWidget {
             Container(
               child: TextForm(
                 validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter password';
+                  }
+
                   return value!.length < 6
                       ? 'Must be at least 6 character'
                       : null;
@@ -85,7 +89,7 @@ class NewPasswordPage extends StatelessWidget {
                 // },
                 name: 'Password',
                 icon: (Icons.remove_red_eye_outlined),
-                controller: null,
+                controller: null, onSaved: (value) {},
               ),
             ),
             SizedBox(
@@ -93,6 +97,9 @@ class NewPasswordPage extends StatelessWidget {
             ),
             TextForm(
               validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter password';
+                }
                 return value!.length < 6
                     ? 'Must be at least 6 character'
                     : null;
@@ -100,6 +107,7 @@ class NewPasswordPage extends StatelessWidget {
               name: 'Confirm Password',
               icon: (Icons.remove_red_eye_outlined),
               controller: null,
+              onSaved: (value) {},
             ),
             SizedBox(
               height: 6.h,
@@ -107,10 +115,9 @@ class NewPasswordPage extends StatelessWidget {
             GestureDetector(
                 onTap: () {
                   if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: ColorData.red,
-                          content: Text("Processing Data....")));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: ColorData.red,
+                        content: Text("Processing Data....")));
                   }
                   // Navigator.push(context, MaterialPageRoute(builder: (context) {
                   //   return LocationPage();

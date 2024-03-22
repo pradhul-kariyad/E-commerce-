@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/commonWidget/builderUsers/stackCategory.dart';
 import 'package:mainproject/commonWidget/builderUsers/stackCategory2.dart';
+import 'package:mainproject/model/homeData.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
 import 'package:mainproject/view/pageview/page1.dart';
 import 'package:mainproject/view/pageview/page2.dart';
@@ -9,9 +10,21 @@ import 'package:mainproject/view/pageview/page3.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final _pageController = PageController();
-  HomePage({super.key});
+
+  @override
+  void initState() {
+    super.initState();
+    homeData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -197,6 +210,7 @@ class HomePage extends StatelessWidget {
               )
             ],
           ),
+      
           SizedBox(
               width: 100.w,
               height: 29.h,

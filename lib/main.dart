@@ -36,17 +36,16 @@ class MyApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
-          theme: ThemeData(
-            scaffoldBackgroundColor: Colors.white,
-          ), //appBarTheme: ,
-          //textTheme:
-          //TextTheme(bodyLarge: TextStyle(), displaySmall: TextStyle()),
-          //iconTheme: IconThemeData(color: Colors.black)),
-          debugShowCheckedModeBanner: false,
-          home:
-              // NewPasswordPage()
-              userlogin ? HomePage() : SignInPage(),
-        );
+            theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+            //appBarTheme: ,
+            //textTheme:  ,
+            //TextTheme(bodyLarge: TextStyle(), displaySmall: TextStyle()),
+            //iconTheme: IconThemeData(color: Colors.black)),
+            debugShowCheckedModeBanner: false,
+            home:
+            //  OtpVarification()
+            userlogin ? HomePage() : SignInPage(),
+            );
       },
     );
   }
