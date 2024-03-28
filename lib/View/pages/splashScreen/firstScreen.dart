@@ -1,14 +1,15 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, avoid_print
 
 import 'dart:ffi';
 import 'package:flutter/material.dart';
-import 'package:mainproject/commonWidget/containerButton.dart';
+import 'package:mainproject/view/home/homePage.dart';
 import 'package:mainproject/view/auth/createPage.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
+import 'package:mainproject/view/widget/myButton.dart';
 import 'package:sizer/sizer.dart';
 
-class SplashScreen1 extends StatelessWidget {
-  const SplashScreen1({super.key});
+class FirstSreen extends StatelessWidget {
+  const FirstSreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -79,16 +80,15 @@ class SplashScreen1 extends StatelessWidget {
                     fontSize: 18.sp)),
             Padding(
               padding: EdgeInsets.only(top: 5.h),
-              child: GestureDetector(
-                onTap: () {
+              child: MyButton(
+                name: "Let's Get Started",
+                onPressed: () {
                   print('Start Page');
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return CreatePage();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return SignInPage();
                   }));
                 },
-                child: ContainerButton(
-                  name: "Let's Get Started",
-                ),
               ),
             ),
             // ElevatedButton(
@@ -101,37 +101,36 @@ class SplashScreen1 extends StatelessWidget {
             SizedBox(
               height: 2.h,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Already have an account?  ',
-                  style:
-                      //  Theme.of(context)
-                      //     .textTheme
-                      //     .displaySmall
-                      //     ?.copyWith(color: const Color.fromARGB(66, 158, 120, 120))
-                      TextStyle(fontSize: 10.sp, fontWeight: FontWeight.bold),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return SignInPage();
-                    }));
-                    print("Sign In");
-                  },
-                  child: Text(
-                    'Sign In',
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.red,
-                        fontSize: 11.sp,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //       return SignInPage();
+            //     }));
+            //     print("Sign In");
+            //   },
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       Text(
+            //         'Already have an account?  ',
+            //         style:
+            //             //  Theme.of(context)
+            //             //     .textTheme
+            //             //     .displaySmall
+            //             //     ?.copyWith(color: const Color.fromARGB(66, 158, 120, 120))
+            //             TextStyle(fontSize: 10.sp, fontWeight: FontWeight.bold),
+            //       ),
+            //       Text(
+            //         'Sign In',
+            //         style: TextStyle(
+            //             decoration: TextDecoration.underline,
+            //             color: Colors.red,
+            //             fontSize: 11.sp,
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -1,11 +1,12 @@
-// ignore_for_file: avoid_print
-
+// ignore_for_file: file_names, avoid_print
 import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:sizer/sizer.dart';
 
-class MyElevated extends StatelessWidget {
-  const MyElevated({super.key});
+class MyButton extends StatelessWidget {
+  final String name;
+  final VoidCallback onPressed;
+  const MyButton({super.key, required this.name, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +19,11 @@ class MyElevated extends StatelessWidget {
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14)))),
-          onPressed: () {
-            print('object');
-          },
-          child: Text("Sign In")),
+          onPressed: onPressed,
+          child: Text(
+            name,
+            style: TextStyle(color: ColorData.white),
+          )),
     );
   }
 }

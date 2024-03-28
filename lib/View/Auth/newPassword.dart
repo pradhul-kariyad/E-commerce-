@@ -1,11 +1,10 @@
-// ignore_for_file: unused_import, avoid_print
-
+// ignore_for_file: unused_import, avoid_print, avoid_unnecessary_containers
 import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
-import 'package:mainproject/commonWidget/TextForm.dart';
-import 'package:mainproject/commonWidget/containerButton.dart';
-import 'package:mainproject/commonWidget/customTextField.dart';
-import 'package:mainproject/view/pages/locationPage.dart';
+import 'package:mainproject/view/auth/signInPage.dart';
+import 'package:mainproject/view/widget/textForm/passwordForm.dart';
+import 'package:mainproject/view/pages/locationPage/locationPage.dart';
+import 'package:mainproject/view/widget/myButton.dart';
 import 'package:sizer/sizer.dart';
 
 class NewPasswordPage extends StatelessWidget {
@@ -25,6 +24,10 @@ class NewPasswordPage extends StatelessWidget {
                 children: [
                   IconButton(
                       onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return SignInPage();
+                        }));
                         print('back button');
                       },
                       icon: Icon(Icons.arrow_back)),
@@ -64,7 +67,9 @@ class NewPasswordPage extends StatelessWidget {
               height: 2.h,
             ),
             Container(
-              child: TextForm(
+              child: PasswordForm(
+                onPressed: () {},
+                obscureText: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter password';
@@ -88,14 +93,16 @@ class NewPasswordPage extends StatelessWidget {
                 // return null;
                 // },
                 name: 'Password',
-                icon: (Icons.remove_red_eye_outlined),
+                icon: (Icons.visibility_off),
                 controller: null, onSaved: (value) {},
               ),
             ),
             SizedBox(
               height: 1.4.h,
             ),
-            TextForm(
+            PasswordForm(
+              onPressed: () {},
+              obscureText: true,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter password';
@@ -105,26 +112,24 @@ class NewPasswordPage extends StatelessWidget {
                     : null;
               },
               name: 'Confirm Password',
-              icon: (Icons.remove_red_eye_outlined),
+              icon: (Icons.visibility_off),
               controller: null,
               onSaved: (value) {},
             ),
             SizedBox(
               height: 6.h,
             ),
-            GestureDetector(
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        backgroundColor: ColorData.red,
-                        content: Text("Processing Data....")));
-                  }
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  //   return LocationPage();
-                  // }));
+            MyButton(
+              name: 'Create New Password',
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      backgroundColor: ColorData.red,
+                      content: Text("Processing Data....")));
                   print("Creat New Password");
-                },
-                child: ContainerButton(name: 'Create New Password')),
+                }
+              },
+            ),
             SizedBox(
               height: 3.h,
             ),

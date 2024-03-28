@@ -1,18 +1,20 @@
-// ignore_for_file: unused_import, await_only_futures, use_build_context_synchronously
+// ignore_for_file: unused_import, await_only_futures, use_build_context_synchronously, unused_field
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mainproject/colors/colors.dart';
-import 'package:mainproject/commonWidget/TextForm.dart';
-import 'package:mainproject/commonWidget/containerButton.dart';
-import 'package:mainproject/commonWidget/dividerUp.dart';
-import 'package:mainproject/model/homeData.dart';
+import 'package:mainproject/view/auth/newPassword.dart';
+import 'package:mainproject/view/widget/textForm/nameForm.dart';
+import 'package:mainproject/view/widget/textForm/passwordForm.dart';
+import 'package:mainproject/view/widget/dividerUp.dart';
+import 'package:mainproject/models/homeData.dart';
 import 'package:mainproject/view/auth/createPage.dart';
-import 'package:mainproject/commonWidget/ipaddress.dart';
+import 'package:mainproject/view/widget/ipaddress/ipaddress.dart';
 import 'package:mainproject/view/auth/otpVerification1.dart';
 import 'package:mainproject/view/auth/otpVerification.dart';
 import 'package:mainproject/view/home/homePage.dart';
+import 'package:mainproject/view/widget/myButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
@@ -32,6 +34,7 @@ class _SignInPageState extends State<SignInPage> {
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late String _email;
+  bool isSelected = true;
 
   @override
   Widget build(BuildContext context) {
@@ -63,31 +66,33 @@ class _SignInPageState extends State<SignInPage> {
                 ),
               ),
               SizedBox(height: 6.h),
-              TextForm(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    String pattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
-                    RegExp regExp = new RegExp(pattern);
-                    if (!regExp.hasMatch(value!)) {
-                      return 'Enter a valid email';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _email = value;
-                  },
-
-                  //  (value) {
-                  //   return !value!.contains('@gmail.com')
-                  //       ? 'Please enter a valid email'
-                  //       : null;
-                  // },
-                  name: 'Email',
-                  controller: mailController),
+              NameForm(
+                name: "Email",
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  String pattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
+                  RegExp regExp = RegExp(pattern);
+                  if (!regExp.hasMatch(value!)) {
+                    return 'Enter a valid email';
+                  }
+                  return null;
+                },
+                controller: mailController,
+                onSaved: (value) {
+                  _email = value;
+                },
+              ),
               SizedBox(height: 1.h),
-              TextForm(
+              PasswordForm(
+                onPressed: () {
+                  log("visibility icon");
+                  setState(() {
+                    isSelected = !isSelected;
+                  });
+                },
+                obscureText: isSelected ? true : false,
                 validator: (value) {
                   return value!.length < 6
                       ? 'Must be at least 6 character'
@@ -95,17 +100,17 @@ class _SignInPageState extends State<SignInPage> {
                 },
                 name: 'Password',
                 controller: passwordController,
-                icon: Icons.remove_red_eye_rounded,
+                icon: isSelected ? Icons.visibility_off : Icons.visibility,
                 onSaved: (value) {},
               ),
               Padding(
                 padding: EdgeInsets.only(left: 54.w, top: 1.3.h),
-                child: GestureDetector(
+                child: InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => OtpVarification()),
+                          builder: (context) => NewPasswordPage()),
                     );
                   },
                   child: Text(
@@ -121,14 +126,14 @@ class _SignInPageState extends State<SignInPage> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 9.h),
-                child: GestureDetector(
-                  onTap: () {
+                child: MyButton(
+                  name: 'Sign In',
+                  onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       signIn(mailController.text, passwordController.text,
                           context);
                     }
                   },
-                  child: ContainerButton(name: 'Sign In'),
                 ),
               ),
               SizedBox(height: 5.h),
@@ -142,22 +147,30 @@ class _SignInPageState extends State<SignInPage> {
                 ),
               ),
               SizedBox(height: 2.h),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CreatePage()),
-                  );
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CreatePage()),
+                      );
+                    },
+                    child: Text(
                       "Don't have an account? ",
                       style: TextStyle(
                           fontSize: 1.6.h, fontWeight: FontWeight.bold),
                     ),
-                    Text(
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CreatePage()),
+                      );
+                    },
+                    child: Text(
                       "Sign Up ",
                       style: TextStyle(
                         decoration: TextDecoration.underline,
@@ -166,8 +179,8 @@ class _SignInPageState extends State<SignInPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -228,7 +241,7 @@ class _SignInPageState extends State<SignInPage> {
           );
         }
       } else if (response.statusCode == 400) {
-        var responseBody = jsonDecode(response.body);
+        var responseBody = await jsonDecode(response.body);
         if (responseBody['error'] == 'Invalid email') {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: ColorData.red, content: Text("Invalid email")));

@@ -1,12 +1,14 @@
+// ignore_for_file: unused_import
 import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
-import 'package:mainproject/commonWidget/builderUsers/stackCategory.dart';
-import 'package:mainproject/commonWidget/builderUsers/stackCategory2.dart';
-import 'package:mainproject/model/homeData.dart';
+import 'package:mainproject/view/widget/builderUsers/stackCategory.dart';
+import 'package:mainproject/view/widget/builderUsers/stackCategory2.dart';
+import 'package:mainproject/models/homeData.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
-import 'package:mainproject/view/pageview/page1.dart';
-import 'package:mainproject/view/pageview/page2.dart';
-import 'package:mainproject/view/pageview/page3.dart';
+import 'package:mainproject/view/widget/myButton.dart';
+import 'package:mainproject/view/widget/pageview/page1.dart';
+import 'package:mainproject/view/widget/pageview/page2.dart';
+import 'package:mainproject/view/widget/pageview/page3.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -29,7 +31,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(backgroundColor: ColorData.redColor,),
+      appBar: AppBar(
+        title: Text("Ecommerce App"),
+        elevation: 0,
+        backgroundColor: ColorData.red,
+      ),
       bottomNavigationBar: NavigationBar(
           indicatorColor: ColorData.grey,
           backgroundColor: ColorData.white,
@@ -74,66 +80,66 @@ class _HomePageState extends State<HomePage> {
                         bottomLeft: Radius.circular(23),
                         bottomRight: Radius.circular(23))),
                 width: MediaQuery.of(context).size.width,
-                height: 25.h,
+                height: 15.h,
               ),
+              // Positioned(
+              //     top: 5.h,
+              //     left: 3.w,
+              //     child: Text(
+              //       "Location",
+              //       style: TextStyle(color: ColorData.white),
+              //     )),
+              // Positioned(
+              //     top: 7.h,
+              //     left: 2.w,
+              //     child: Row(
+              //       children: [
+              //         Padding(
+              //           padding: EdgeInsets.only(right: 1.w),
+              //           child: Icon(
+              //             Icons.location_on_rounded,
+              //             color: ColorData.white,
+              //           ),
+              //         ),
+              //         Text(
+              //           "New York, USA",
+              //           style: TextStyle(color: ColorData.white),
+              //         ),
+              //         IconButton(
+              //             onPressed: () {},
+              //             icon: Icon(
+              //               Icons.arrow_drop_down_rounded,
+              //               color: ColorData.white,
+              //             ))
+              //       ],
+              //     )),
+              // Positioned(
+              //   top: 5.6.h,
+              //   right: 3.w,
+              //   child: Container(
+              //     // ignore: sort_child_properties_last
+              //     child: IconButton(
+              //       onPressed: () {
+              //         // ignore: avoid_print
+              //         print("notification icon");
+              //       },
+              //       icon: Icon(
+              //         Icons.notifications_rounded,
+              //         color: ColorData.white,
+              //         size: 22,
+              //       ),
+              //     ),
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(9),
+              //       color: Color.fromARGB(255, 222, 221, 221).withOpacity(.3),
+              //     ),
+              //     width: 10.3.w,
+              //     height: 5.4.h,
+              //   ),
+              // ),
               Positioned(
-                  top: 5.h,
                   left: 3.w,
-                  child: Text(
-                    "Location",
-                    style: TextStyle(color: ColorData.white),
-                  )),
-              Positioned(
-                  top: 7.h,
-                  left: 2.w,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 1.w),
-                        child: Icon(
-                          Icons.location_on_rounded,
-                          color: ColorData.white,
-                        ),
-                      ),
-                      Text(
-                        "New York, USA",
-                        style: TextStyle(color: ColorData.white),
-                      ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.arrow_drop_down_rounded,
-                            color: ColorData.white,
-                          ))
-                    ],
-                  )),
-              Positioned(
-                top: 5.6.h,
-                right: 3.w,
-                child: Container(
-                  // ignore: sort_child_properties_last
-                  child: IconButton(
-                    onPressed: () {
-                      // ignore: avoid_print
-                      print("notification icon");
-                    },
-                    icon: Icon(
-                      Icons.notifications_rounded,
-                      color: ColorData.white,
-                      size: 22,
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9),
-                    color: Color.fromARGB(255, 222, 221, 221).withOpacity(.3),
-                  ),
-                  width: 10.3.w,
-                  height: 5.4.h,
-                ),
-              ),
-              Positioned(
-                  left: 3.w,
-                  top: 15.h,
+                  top: 3.h,
                   child: Container(
                     decoration: BoxDecoration(
                         color: ColorData.white,
@@ -146,12 +152,7 @@ class _HomePageState extends State<HomePage> {
                               color: Color.fromARGB(255, 205, 204, 204)),
                           border: InputBorder.none,
                           prefixIcon: IconButton(
-                              onPressed: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return SignInPage();
-                                }));
-                              },
+                              onPressed: () {},
                               icon: Icon(
                                 Icons.manage_search_outlined,
                                 color: ColorData.red,
@@ -161,12 +162,17 @@ class _HomePageState extends State<HomePage> {
                     height: 5.h,
                   )),
               Positioned(
-                top: 15.h,
+                top: 3.h,
                 right: 5.w,
                 child: Container(
                   // ignore: sort_child_properties_last
                   child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) {
+                          return SignInPage();
+                        }));
+                      },
                       icon: Icon(
                         Icons.menu_open_sharp,
                         color: ColorData.red,
@@ -210,7 +216,6 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
-      
           SizedBox(
               width: 100.w,
               height: 29.h,

@@ -1,16 +1,16 @@
 // ignore_for_file: unused_import, must_be_immutable
-import 'package:mainproject/commonWidget/pinputVerification/pinputverification.dart';
-import 'package:mainproject/commonWidget/verificationForm.dart';
+import 'package:mainproject/service/providerService.dart';
+import 'package:mainproject/view/widget/pinputVerification/pinputverification.dart';
+import 'package:mainproject/view/widget/verificationForm.dart';
 import 'package:mainproject/view/auth/createPage.dart';
 import 'package:mainproject/view/auth/newPassword.dart';
 import 'package:mainproject/view/auth/otpVerification1.dart';
 import 'package:mainproject/view/auth/otpVerification.dart';
-import 'package:mainproject/view/authGate/authGate.dart';
 import 'package:mainproject/view/home/productPage.dart';
-import 'package:mainproject/view/splashScreen/SplashScreen1.dart';
-import 'package:mainproject/view/pages/locationOpenPage.dart';
-import 'package:mainproject/view/pages/locationPage.dart';
-import 'package:mainproject/view/pages/notificationPage.dart';
+import 'package:mainproject/view/pages/splashScreen/firstScreen.dart';
+import 'package:mainproject/view/pages/locationPage/locationOpenPage.dart';
+import 'package:mainproject/view/pages/locationPage/locationPage.dart';
+import 'package:mainproject/view/pages/notificationPage/notificationPage.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
 import 'package:mainproject/view/home/homePage.dart';
 import 'package:flutter/material.dart';
@@ -42,9 +42,9 @@ class MyApp extends StatelessWidget {
             //TextTheme(bodyLarge: TextStyle(), displaySmall: TextStyle()),
             //iconTheme: IconThemeData(color: Colors.black)),
             debugShowCheckedModeBanner: false,
-            home:
-            //  OtpVarification()
-            userlogin ? HomePage() : SignInPage(),
+            home: 
+            // ProviderService()
+            userlogin ? HomePage() : FirstSreen(),
             );
       },
     );

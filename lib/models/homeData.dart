@@ -2,8 +2,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'package:mainproject/commonWidget/ipaddress.dart';
-import 'package:mainproject/model/categorizedProducts.dart';
+import 'package:mainproject/view/widget/ipaddress/ipaddress.dart';
+import 'package:mainproject/models/postmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<CategorizedProducts> homeData() async {

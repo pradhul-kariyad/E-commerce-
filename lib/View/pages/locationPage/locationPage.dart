@@ -1,9 +1,12 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
-import 'package:mainproject/commonWidget/containerButton.dart';
+import 'package:mainproject/view/home/homePage.dart';
+import 'package:mainproject/view/widget/myButton.dart';
 import 'package:sizer/sizer.dart';
 
-class NotificationPage extends StatelessWidget {
-  const NotificationPage({super.key});
+class LocationPage extends StatelessWidget {
+  const LocationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class NotificationPage extends StatelessWidget {
               child: CircleAvatar(
                   // ignore: sort_child_properties_last
                   child: Icon(
-                    Icons.add_alert_sharp,
+                    Icons.location_on_rounded,
                     color: Colors.red,
                     size: 5.h,
                   ),
@@ -28,10 +31,10 @@ class NotificationPage extends StatelessWidget {
             padding: EdgeInsets.only(top: 1.h),
             child: Center(
               child: Text(
-                'Enable Notification Access',
+                'What is Your Location?',
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 21.sp,
+                    fontSize: 23.sp,
                     fontWeight: FontWeight.w500),
               ),
             ),
@@ -40,14 +43,14 @@ class NotificationPage extends StatelessWidget {
             height: 2.h,
           ),
           Text(
-            'Enable notifications to receive real-time',
+            'We need to know your location in order to suggest',
             style: TextStyle(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w400,
                 color: const Color.fromARGB(255, 209, 207, 207)),
           ),
           Text(
-            'updates on your Order.',
+            'nearby services.',
             style: TextStyle(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w400,
@@ -55,15 +58,20 @@ class NotificationPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(top: 8.h, bottom: 3.2.h),
-            child: GestureDetector(
-                onTap: () {
-                  // ignore: avoid_print
-                  print("notification access");
-                },
-                child: ContainerButton(name: "Allow Notification")),
+            child: MyButton(
+              name: "Allow Location Access",
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) {
+                  return HomePage();
+                }));
+                // ignore: avoid_print
+                print("location access");
+              },
+            ),
           ),
           Text(
-            "Maybe Later",
+            "Enter Location Manually",
             style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
           ),
         ],

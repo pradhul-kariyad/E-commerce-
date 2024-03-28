@@ -1,10 +1,11 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
-import 'package:mainproject/commonWidget/containerButton.dart';
-import 'package:mainproject/view/home/homePage.dart';
+import 'package:mainproject/view/widget/myButton.dart';
 import 'package:sizer/sizer.dart';
 
-class LocationPage extends StatelessWidget {
-  const LocationPage({super.key});
+class NotificationPage extends StatelessWidget {
+  const NotificationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class LocationPage extends StatelessWidget {
               child: CircleAvatar(
                   // ignore: sort_child_properties_last
                   child: Icon(
-                    Icons.location_on_rounded,
+                    Icons.add_alert_sharp,
                     color: Colors.red,
                     size: 5.h,
                   ),
@@ -29,10 +30,10 @@ class LocationPage extends StatelessWidget {
             padding: EdgeInsets.only(top: 1.h),
             child: Center(
               child: Text(
-                'What is Your Location?',
+                'Enable Notification Access',
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 23.sp,
+                    fontSize: 21.sp,
                     fontWeight: FontWeight.w500),
               ),
             ),
@@ -41,14 +42,14 @@ class LocationPage extends StatelessWidget {
             height: 2.h,
           ),
           Text(
-            'We need to know your location in order to suggest',
+            'Enable notifications to receive real-time',
             style: TextStyle(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w400,
                 color: const Color.fromARGB(255, 209, 207, 207)),
           ),
           Text(
-            'nearby services.',
+            'updates on your Order.',
             style: TextStyle(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w400,
@@ -56,18 +57,16 @@ class LocationPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(top: 8.h, bottom: 3.2.h),
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return HomePage();
-                  }));
-                  // ignore: avoid_print
-                  print("location access");
-                },
-                child: ContainerButton(name: "Allow Location Access")),
+            child: MyButton(
+              name: "Allow Notification",
+              onPressed: () {
+                // ignore: avoid_print
+                print("notification access");
+              },
+            ),
           ),
           Text(
-            "Enter Location Manually",
+            "Maybe Later",
             style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
           ),
         ],

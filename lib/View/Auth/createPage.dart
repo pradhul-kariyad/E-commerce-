@@ -1,32 +1,47 @@
-// ignore_for_file: unused_import, unnecessary_new, must_be_immutable, unused_field
+// ignore_for_file: unused_import, unnecessary_new, must_be_immutable, unused_field, use_build_context_synchronously
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mainproject/colors/colors.dart';
-import 'package:mainproject/commonWidget/pinputVerification/pinputverification.dart';
-import 'package:mainproject/commonWidget/ipaddress.dart';
+import 'package:mainproject/view/widget/myButton.dart';
+import 'package:mainproject/view/widget/textForm/nameForm.dart';
+import 'package:mainproject/view/widget/pinputVerification/pinputverification.dart';
+import 'package:mainproject/view/widget/ipaddress/ipaddress.dart';
 import 'package:mainproject/view/auth/otpVerification.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mainproject/commonWidget/containerButton.dart';
-import 'package:mainproject/view/splashScreen/SplashScreen1.dart';
-import 'package:mainproject/commonWidget/TextForm.dart';
-import 'package:mainproject/commonWidget/checkBox.dart';
-import 'package:mainproject/commonWidget/dividerUp.dart';
+import 'package:mainproject/view/pages/splashScreen/firstScreen.dart';
+import 'package:mainproject/view/widget/textForm/passwordForm.dart';
+import 'package:mainproject/view/widget/checkBox.dart';
+import 'package:mainproject/view/widget/dividerUp.dart';
 import 'package:mainproject/view/auth/otpVerification1.dart';
 import 'package:mainproject/view/home/homePage.dart';
 import 'package:sizer/sizer.dart';
 
-class CreatePage extends StatelessWidget {
+class CreatePage extends StatefulWidget {
   final void Function()? onTap;
   CreatePage({super.key, this.onTap});
+
+  @override
+  State<CreatePage> createState() => _CreatePageState();
+}
+
+class _CreatePageState extends State<CreatePage> {
   final nameController = TextEditingController();
+
   final mailController = TextEditingController();
+
   final phnoController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+
   late String _email;
+
+  bool isSelected = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,20 +111,21 @@ class CreatePage extends StatelessWidget {
               //       color: const Color.fromARGB(255, 209, 207, 207)),
               // ),
 
-              TextForm(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
-                // obscureText: false,
-                // labelText: 'Name',
-                name: 'Name',
-                controller: nameController, onSaved: (value) {},
-              ),
-              TextForm(
-                // labelText: 'Email',
+              NameForm(
+                  name: "Name",
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    }
+                    return null;
+                  },
+                  controller: nameController,
+                  onSaved: (value) {}),
+         
+
+              NameForm(
+                name: "Email",
+                controller: mailController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email';
@@ -124,43 +140,37 @@ class CreatePage extends StatelessWidget {
                 onSaved: (value) {
                   _email = value;
                 },
-
-                // (value) {
-                //   return !value!.contains('@gmail.com')
-                //       ? 'Please enter a valid email'
-                //       : null;
-                // },
-                name: 'Email',
-                controller: mailController,
               ),
-              TextForm(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your phone number';
-                  }
-                  return null;
+          
+              NameForm(
+                  name: "Phone Number",
+                  controller: phnoController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your phone number';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {}),
+            
+              PasswordForm(
+                onPressed: () {
+                  setState(() {
+                    isSelected = !isSelected;
+                  });
                 },
-                // obscureText: false,
-                name: 'Phone Number',
-                controller: phnoController, onSaved: (value) {},
-                // labelText: 'Phone Number',
-              ),
-              TextForm(
+                obscureText: isSelected ? true : false,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter password';
                   }
                   return null;
                 },
-                // obscureText: true,
                 name: 'Password',
-                // labelText: 'Password',
-                icon: Icons.remove_red_eye_outlined,
-                controller: passwordController, onSaved: (value) {},
+                icon: isSelected ? Icons.visibility_off : Icons.visibility,
+                controller: passwordController,
+                onSaved: (value) {},
               ),
-              // SizedBox(
-              //   height: 10,
-              // ),
               Padding(
                 padding: EdgeInsets.only(top: 1.h, left: 2.2.h),
                 child: Row(
@@ -184,19 +194,20 @@ class CreatePage extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 1.h, bottom: 2.h),
-                child: GestureDetector(
-                    onTap: () {
-                      _formKey.currentState!.validate();
-                      // ignore: avoid_print
-                      print('SIGN UP PAGE');
-                      signUp(
-                          phnoController.text,
-                          nameController.text.toString(),
-                          mailController.text.toString(),
-                          passwordController.text.trim(),
-                          context);
-                    },
-                    child: ContainerButton(name: 'Sign Up')),
+                child: MyButton(
+                  name: 'Sign Up',
+                  onPressed: () {
+                    _formKey.currentState!.validate();
+                    // ignore: avoid_print
+                    print('SIGN UP PAGE');
+                    signUp(
+                        phnoController.text,
+                        nameController.text.toString(),
+                        mailController.text.toString(),
+                        passwordController.text.trim(),
+                        context);
+                  },
+                ),
               ),
               DividerUp(name: 'Or sign up with'),
               SizedBox(
@@ -217,18 +228,19 @@ class CreatePage extends StatelessWidget {
               SizedBox(
                 height: 2.h,
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return SignInPage();
-                  }));
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 2.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
+              Padding(
+                padding: EdgeInsets.only(bottom: 2.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return SignInPage();
+                        }));
+                      },
+                      child: Text(
                         style:
                             //  Theme.of(context)
                             //     .textTheme
@@ -238,7 +250,15 @@ class CreatePage extends StatelessWidget {
                                 fontSize: 1.6.h, fontWeight: FontWeight.bold),
                         "Already have an account? ",
                       ),
-                      Text(
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return SignInPage();
+                        }));
+                      },
+                      child: Text(
                         "Sign in",
                         style: TextStyle(
                             decoration: TextDecoration.underline,
@@ -246,8 +266,8 @@ class CreatePage extends StatelessWidget {
                             fontSize: 1.6.h,
                             fontWeight: FontWeight.bold),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -284,7 +304,6 @@ Future<void> signUp(String phoneNumber, String name, String email, password,
       if (userid != null) {
         SharedPreferences pref = await SharedPreferences.getInstance();
         await pref.setString('userid', userid);
-        // ignore: use_build_context_synchronously
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
           return OtpVarification();
@@ -295,11 +314,11 @@ Future<void> signUp(String phoneNumber, String name, String email, password,
 
       // log(token.toString() + "uytrererrrrrrrrrrrr");
     } else if (response.statusCode == 400) {
-      var responseBody = jsonDecode(response.body);
+      var responseBody = await jsonDecode(response.body);
       if (responseBody['error'] == 'Email ID Already Exist') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: ColorData.red,
-            content: Text("Email ID Already Exists")));
+            content: Text("Email ID Already Exist")));
       } else {
         // Handle other error cases if needed
       }

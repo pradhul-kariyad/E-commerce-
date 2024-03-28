@@ -1,19 +1,25 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:sizer/sizer.dart';
 
-class TextForm extends StatelessWidget {
+class NameForm extends StatelessWidget {
   final String? Function(String?)? validator;
   final String name;
-  final IconData? icon;
+  // final IconData? icon;
+  // bool obscureText = false;
+  // final VoidCallback onPressed;
   final TextEditingController? controller;
-  const TextForm({
-    this.icon,
+  const NameForm({
+    // required this.obscureText,
+    // this.icon,
     required this.name,
     super.key,
     required this.controller,
     this.validator,
     required Null Function(dynamic value) onSaved,
+    // required this.onPressed,
     // required this.obscureText
   });
 
@@ -55,7 +61,7 @@ class TextForm extends StatelessWidget {
             decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: ColorData.wgrey)),
+                  borderSide: BorderSide(color: ColorData.white)),
               border: OutlineInputBorder(
                   borderSide: BorderSide(color: ColorData.wgrey),
                   borderRadius: BorderRadius.circular(14)),
@@ -66,12 +72,7 @@ class TextForm extends StatelessWidget {
               filled: true,
               // focusedBorder: OutlineInputBorder(
               //     borderSide: BorderSide(color: ColorData.wgrey)),
-              suffixIcon: IconButton(
-                  onPressed: () {
-                    // ignore: avoid_print
-                    print('password Icon');
-                  },
-                  icon: Icon(icon)),
+              // suffixIcon: IconButton(onPressed: onPressed, icon: Icon(icon)),
               // Icon(
               //   icon,
               //   // color: Colors.black,

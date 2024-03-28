@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mainproject/commonWidget/containerButton.dart';
-import 'package:mainproject/commonWidget/ipaddress.dart';
+import 'package:mainproject/view/widget/ipaddress/ipaddress.dart';
 // import 'package:mainproject/view/home/homePage.dart';
 // import 'package:mainproject/view/auth/createPage.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
+import 'package:mainproject/view/widget/myButton.dart';
 import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -202,13 +202,14 @@ class _PinputExampleState extends State<PinputExample> {
                 SizedBox(
                   height: 5.h,
                 ),
-                GestureDetector(
-                    onTap: () {
-                      verifyCode(pinController.text, context);
-                      focusNode.unfocus();
-                      formKey.currentState!.validate();
-                    },
-                    child: ContainerButton(name: 'Verify')),
+                MyButton(
+                  name: 'Verify',
+                  onPressed: () {
+                    verifyCode(pinController.text, context);
+                    focusNode.unfocus();
+                    formKey.currentState!.validate();
+                  },
+                ),
                 // TextButton(
                 //   onPressed: () {
                 //     focusNode.unfocus();
