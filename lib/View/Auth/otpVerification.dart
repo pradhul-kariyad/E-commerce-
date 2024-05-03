@@ -1,9 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
-import 'package:mainproject/view/widget/ipaddress/ipaddress.dart';
+import 'package:mainproject/view/auth/createPage.dart';
+import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
 // import 'package:mainproject/view/home/homePage.dart';
 // import 'package:mainproject/view/auth/createPage.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
-import 'package:mainproject/view/widget/myButton.dart';
+import 'package:mainproject/view/widgets/myButton.dart';
 import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -75,6 +78,10 @@ class _PinputExampleState extends State<PinputExample> {
                 IconButton(
                     onPressed: () {
                       print('back button');
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CreatePage();
+                      }));
                     },
                     icon: Icon(Icons.arrow_back)),
               ],

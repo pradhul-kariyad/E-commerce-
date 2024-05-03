@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
-import 'package:mainproject/view/widget/textForm/passwordForm.dart';
+import 'package:mainproject/view/widgets/textForm/passwordForm.dart';
 import 'package:mainproject/view/pages/locationPage/locationPage.dart';
-import 'package:mainproject/view/widget/myButton.dart';
+import 'package:mainproject/view/widgets/myButton.dart';
 import 'package:sizer/sizer.dart';
 
 class NewPasswordPage extends StatelessWidget {

@@ -1,7 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
-import 'package:mainproject/view/widget/myButton.dart';
+import 'package:mainproject/view/widgets/myButton.dart';
 import 'package:sizer/sizer.dart';
 
 class NotificationPage extends StatelessWidget {

@@ -1,8 +1,8 @@
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
-import 'package:mainproject/view/home/homePage.dart';
-import 'package:mainproject/view/widget/myButton.dart';
+import 'package:mainproject/view/home/homePage/homePage.dart';
+import 'package:mainproject/view/widgets/myButton.dart';
 import 'package:sizer/sizer.dart';
 
 class LocationPage extends StatelessWidget {
@@ -61,8 +61,7 @@ class LocationPage extends StatelessWidget {
             child: MyButton(
               name: "Allow Location Access",
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return HomePage();
                 }));
                 // ignore: avoid_print

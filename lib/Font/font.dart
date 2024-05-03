@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
 
 class FontData {
-  static TextStyle fontBold = 
+  static TextStyle fontBold =
       TextStyle(color: ColorData.red, fontWeight: FontWeight.bold);
   static TextStyle font500 = TextStyle(fontWeight: FontWeight.w500);
 }

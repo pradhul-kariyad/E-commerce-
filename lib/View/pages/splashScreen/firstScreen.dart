@@ -2,10 +2,9 @@
 
 import 'dart:ffi';
 import 'package:flutter/material.dart';
-import 'package:mainproject/view/home/homePage.dart';
 import 'package:mainproject/view/auth/createPage.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
-import 'package:mainproject/view/widget/myButton.dart';
+import 'package:mainproject/view/widgets/myButton.dart';
 import 'package:sizer/sizer.dart';
 
 class FirstSreen extends StatelessWidget {

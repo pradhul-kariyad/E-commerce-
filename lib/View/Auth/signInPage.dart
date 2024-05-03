@@ -1,41 +1,36 @@
-// ignore_for_file: unused_import, await_only_futures, use_build_context_synchronously, unused_field
+// ignore_for_file: unused_import, await_only_futures, use_build_context_synchronously, unused_field, unnecessary_brace_in_string_interps, avoid_print, must_be_immutable
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:mainproject/colors/colors.dart';
+import 'package:mainproject/providers/iconProvider/iconProvider.dart';
+import 'package:mainproject/providers/auth/signInProvider.dart';
 import 'package:mainproject/view/auth/newPassword.dart';
-import 'package:mainproject/view/widget/textForm/nameForm.dart';
-import 'package:mainproject/view/widget/textForm/passwordForm.dart';
-import 'package:mainproject/view/widget/dividerUp.dart';
-import 'package:mainproject/models/homeData.dart';
+import 'package:mainproject/view/home/homePage/homePage.dart';
+import 'package:mainproject/view/widgets/textForm/nameForm.dart';
+import 'package:mainproject/view/widgets/textForm/passwordForm.dart';
+import 'package:mainproject/view/widgets/dividerUp.dart';
+import 'package:mainproject/models/examples/examples.dart';
 import 'package:mainproject/view/auth/createPage.dart';
-import 'package:mainproject/view/widget/ipaddress/ipaddress.dart';
+import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
 import 'package:mainproject/view/auth/otpVerification1.dart';
 import 'package:mainproject/view/auth/otpVerification.dart';
-import 'package:mainproject/view/home/homePage.dart';
-import 'package:mainproject/view/widget/myButton.dart';
+import 'package:mainproject/view/widgets/myButton.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
-class SignInPage extends StatefulWidget {
+class SignInPage extends StatelessWidget {
   final void Function()? onTap;
-  const SignInPage({
+  SignInPage({
     Key? key,
     this.onTap,
   }) : super(key: key);
 
-  @override
-  State<SignInPage> createState() => _SignInPageState();
-}
-
-class _SignInPageState extends State<SignInPage> {
   final mailController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late String _email;
-  bool isSelected = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +69,7 @@ class _SignInPageState extends State<SignInPage> {
                   }
                   String pattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
                   RegExp regExp = RegExp(pattern);
-                  if (!regExp.hasMatch(value!)) {
+                  if (!regExp.hasMatch(value)) {
                     return 'Enter a valid email';
                   }
                   return null;
@@ -85,23 +80,26 @@ class _SignInPageState extends State<SignInPage> {
                 },
               ),
               SizedBox(height: 1.h),
-              PasswordForm(
-                onPressed: () {
-                  log("visibility icon");
-                  setState(() {
-                    isSelected = !isSelected;
-                  });
+              Consumer<IconProvider>(
+                builder: (BuildContext context, iconAndOb, Widget? child) {
+                  return PasswordForm(
+                    onPressed: () {
+                      log("visibility icon");
+                      iconAndOb.changeIcon();
+                      iconAndOb.changeObt();
+                    },
+                    obscureText: iconAndOb.changeOb,
+                    validator: (value) {
+                      return value!.length < 6
+                          ? 'Must be at least 6 character'
+                          : null;
+                    },
+                    name: 'Password',
+                    controller: passwordController,
+                    icon: iconAndOb.icon,
+                    onSaved: (value) {},
+                  );
                 },
-                obscureText: isSelected ? true : false,
-                validator: (value) {
-                  return value!.length < 6
-                      ? 'Must be at least 6 character'
-                      : null;
-                },
-                name: 'Password',
-                controller: passwordController,
-                icon: isSelected ? Icons.visibility_off : Icons.visibility,
-                onSaved: (value) {},
               ),
               Padding(
                 padding: EdgeInsets.only(left: 54.w, top: 1.3.h),
@@ -126,13 +124,25 @@ class _SignInPageState extends State<SignInPage> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 9.h),
-                child: MyButton(
-                  name: 'Sign In',
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      signIn(mailController.text, passwordController.text,
-                          context);
+                child: Consumer<SignInProvider>(
+                  builder:
+                      (BuildContext context, signInProvider, Widget? child) {
+                    if (signInProvider.isLoading) {
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: ColorData.grey,
+                        strokeAlign: -4,
+                      ));
                     }
+                    return MyButton(
+                      name: 'Sign In',
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          signInProvider.signIn(mailController.text,
+                              passwordController.text, context);
+                        }
+                      },
+                    );
                   },
                 ),
               ),
@@ -187,81 +197,5 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
-  }
-
-  Future<void> signIn(
-      String email, String password, BuildContext context) async {
-    try {
-      log("Sending login request...");
-
-      var response = await http.post(
-        // ignore: unnecessary_brace_in_string_interps
-        Uri.parse('http://${ip}:3000/flutter/fuser_signin'),
-        body: {'email': email, 'password': password},
-      );
-
-      log('Response status code: ${response.statusCode}');
-      log('Response body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        // showDialog(
-        //   context: context,
-        //   builder: (context) => AlertDialog(
-        //     title: Text('Sign-in successful...'),
-        //     actions: [
-        //       TextButton(
-        //         onPressed: () {
-        //           Navigator.of(context).pop();
-        //         },
-        //         child: Text('OK'),
-        //       ),
-        //     ],
-        //   ),
-        // );
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: ColorData.red,
-            content: Text("Sign-in successful...")));
-
-        log("Sign-in successful");
-        var result = jsonDecode(response.body);
-        String? token = result['token'];
-
-        if (token != null) {
-          SharedPreferences pref = await SharedPreferences.getInstance();
-          await pref.setString('token', token);
-          await pref.setBool('userlogin', true);
-          // ignore: avoid_print, unnecessary_brace_in_string_interps
-          print('local store: ${pref}');
-          // homeData();
-          Navigator.pushReplacement(
-            // Use pushReplacement to replace the current route with the home page
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomePage()), // Navigate to the HomePage
-          );
-        }
-      } else if (response.statusCode == 400) {
-        var responseBody = await jsonDecode(response.body);
-        if (responseBody['error'] == 'Invalid email') {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: ColorData.red, content: Text("Invalid email")));
-        } else if (responseBody['error'] == 'Invalid password') {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: ColorData.red,
-              content: Text("Invalid Password")));
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              backgroundColor: ColorData.red, content: Text("Invalid Email")));
-        }
-        log("Sign-in failed with status code: ${response.statusCode}");
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: ColorData.red,
-            content: Text("Sign-in failed...")));
-        log("Sign-in failed with status code: ${response.statusCode}");
-      }
-    } catch (e) {
-      log('Error during sign-in: $e');
-    }
   }
 }

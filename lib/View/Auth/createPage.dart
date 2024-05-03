@@ -2,46 +2,34 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:mainproject/colors/colors.dart';
-import 'package:mainproject/view/widget/myButton.dart';
-import 'package:mainproject/view/widget/textForm/nameForm.dart';
-import 'package:mainproject/view/widget/pinputVerification/pinputverification.dart';
-import 'package:mainproject/view/widget/ipaddress/ipaddress.dart';
+import 'package:mainproject/providers/auth/createDataProvider.dart';
+import 'package:mainproject/providers/iconProvider/iconProvider.dart';
+import 'package:mainproject/view/widgets/myButton.dart';
+import 'package:mainproject/view/widgets/textForm/nameForm.dart';
+import 'package:mainproject/view/widgets/pinputVerification/pinputverification.dart';
+import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
 import 'package:mainproject/view/auth/otpVerification.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mainproject/view/pages/splashScreen/firstScreen.dart';
-import 'package:mainproject/view/widget/textForm/passwordForm.dart';
-import 'package:mainproject/view/widget/checkBox.dart';
-import 'package:mainproject/view/widget/dividerUp.dart';
+import 'package:mainproject/view/widgets/textForm/passwordForm.dart';
+import 'package:mainproject/view/widgets/checkBox.dart';
+import 'package:mainproject/view/widgets/dividerUp.dart';
 import 'package:mainproject/view/auth/otpVerification1.dart';
-import 'package:mainproject/view/home/homePage.dart';
 import 'package:sizer/sizer.dart';
 
-class CreatePage extends StatefulWidget {
+class CreatePage extends StatelessWidget {
   final void Function()? onTap;
   CreatePage({super.key, this.onTap});
 
-  @override
-  State<CreatePage> createState() => _CreatePageState();
-}
-
-class _CreatePageState extends State<CreatePage> {
   final nameController = TextEditingController();
-
   final mailController = TextEditingController();
-
   final phnoController = TextEditingController();
-
   final passwordController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
-
   late String _email;
-
-  bool isSelected = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +109,6 @@ class _CreatePageState extends State<CreatePage> {
                   },
                   controller: nameController,
                   onSaved: (value) {}),
-         
 
               NameForm(
                 name: "Email",
@@ -132,7 +119,7 @@ class _CreatePageState extends State<CreatePage> {
                   }
                   String pattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
                   RegExp regExp = new RegExp(pattern);
-                  if (!regExp.hasMatch(value!)) {
+                  if (!regExp.hasMatch(value)) {
                     return 'Enter a valid email';
                   }
                   return null;
@@ -141,7 +128,7 @@ class _CreatePageState extends State<CreatePage> {
                   _email = value;
                 },
               ),
-          
+
               NameForm(
                   name: "Phone Number",
                   controller: phnoController,
@@ -152,24 +139,27 @@ class _CreatePageState extends State<CreatePage> {
                     return null;
                   },
                   onSaved: (value) {}),
-            
-              PasswordForm(
-                onPressed: () {
-                  setState(() {
-                    isSelected = !isSelected;
-                  });
+
+              Consumer<IconProvider>(
+                builder: (BuildContext context, icon, Widget? child) {
+                  return PasswordForm(
+                    onPressed: () {
+                      icon.changeIcon();
+                      icon.changeObt();
+                    },
+                    obscureText: icon.changeOb,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter password';
+                      }
+                      return null;
+                    },
+                    name: 'Password',
+                    icon: icon.icon,
+                    controller: passwordController,
+                    onSaved: (value) {},
+                  );
                 },
-                obscureText: isSelected ? true : false,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter password';
-                  }
-                  return null;
-                },
-                name: 'Password',
-                icon: isSelected ? Icons.visibility_off : Icons.visibility,
-                controller: passwordController,
-                onSaved: (value) {},
               ),
               Padding(
                 padding: EdgeInsets.only(top: 1.h, left: 2.2.h),
@@ -194,18 +184,31 @@ class _CreatePageState extends State<CreatePage> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 1.h, bottom: 2.h),
-                child: MyButton(
-                  name: 'Sign Up',
-                  onPressed: () {
-                    _formKey.currentState!.validate();
-                    // ignore: avoid_print
-                    print('SIGN UP PAGE');
-                    signUp(
-                        phnoController.text,
-                        nameController.text.toString(),
-                        mailController.text.toString(),
-                        passwordController.text.trim(),
-                        context);
+                child: Consumer<CreateDateProvider>(
+                  builder: (BuildContext context, create, Widget? child) {
+                    if (create.isLoading) {
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: ColorData.grey,
+                        strokeAlign: -4,
+                      ));
+                    }
+                    return MyButton(
+                      name: 'Sign Up',
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          create.signUp(
+                              phnoController.text,
+                              nameController.text.toString(),
+                              mailController.text.toString(),
+                              passwordController.text.trim(),
+                              context);
+                        }
+
+                        // ignore: avoid_print
+                        print('SIGN UP PAGE');
+                      },
+                    );
                   },
                 ),
               ),
@@ -275,59 +278,5 @@ class _CreatePageState extends State<CreatePage> {
         ),
       ),
     );
-  }
-}
-
-Future<void> signUp(String phoneNumber, String name, String email, password,
-    BuildContext context) async {
-  try {
-    log("Sending sign-up request...");
-
-    var response = await http.post(
-      // ignore: unnecessary_brace_in_string_interps
-      Uri.parse('http://${ip}:3000/flutter/fuser_registration'),
-      body: {
-        'phoneno': phoneNumber,
-        'name': name,
-        'email': email,
-        'password': password,
-      },
-    );
-
-    log('Response status code: ${response.statusCode}');
-    log('Response body: ${response.body}');
-
-    if (response.statusCode == 200) {
-      log("Sign-up successful");
-      var result = jsonDecode(response.body);
-      String? userid = result['userid'];
-      if (userid != null) {
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        await pref.setString('userid', userid);
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return OtpVarification();
-        }));
-      }
-      // var result = jsonDecode(response.body);
-      // String? token = result['token'];
-
-      // log(token.toString() + "uytrererrrrrrrrrrrr");
-    } else if (response.statusCode == 400) {
-      var responseBody = await jsonDecode(response.body);
-      if (responseBody['error'] == 'Email ID Already Exist') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: ColorData.red,
-            content: Text("Email ID Already Exist")));
-      } else {
-        // Handle other error cases if needed
-      }
-      log("Sign-up failed with status code: ${response.statusCode}");
-    } else {
-      // Handle other status codes if needed
-      log("Sign-up failed with status code: ${response.statusCode}");
-    }
-  } catch (e) {
-    log('Error during sign-up: $e');
   }
 }
