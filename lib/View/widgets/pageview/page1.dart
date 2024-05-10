@@ -1,5 +1,5 @@
+// ignore_for_file: unused_import
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/providers/bannerProvider/bannerDataProvider.dart';

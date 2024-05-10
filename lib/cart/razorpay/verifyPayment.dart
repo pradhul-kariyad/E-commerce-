@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/view/home/homePage/homePage.dart';
+import 'package:mainproject/view/home/mainPage/mainPage.dart';
 import 'package:mainproject/view/widgets/myButton.dart';
 import 'package:mainproject/view/widgets/profileForm/profileButton.dart';
 import 'package:sizer/sizer.dart';
@@ -66,7 +67,7 @@ class VerifyPayment extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return HomePage();
+                      return MainPage();
                     }));
                   },
                   child: Text(

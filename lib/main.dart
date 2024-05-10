@@ -1,4 +1,5 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, unused_import
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:mainproject/providers/auth/createDataProvider.dart';
 import 'package:mainproject/providers/auth/logOutProvider.dart';
 import 'package:mainproject/providers/bannerProvider/bannerDataProvider.dart';
@@ -32,7 +33,6 @@ import 'package:sizer/sizer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool userlogin = prefs.getBool('userlogin') ?? false;
   runApp(MyApp(
@@ -48,10 +48,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-            ChangeNotifierProvider(create: (context) {
+        ChangeNotifierProvider(create: (context) {
           return LogOutProvider();
         }),
-           ChangeNotifierProvider(create: (context) {
+        ChangeNotifierProvider(create: (context) {
           return ImgProvider();
         }),
         ChangeNotifierProvider(create: (context) {

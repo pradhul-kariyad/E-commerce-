@@ -13,7 +13,7 @@ import 'package:sizer/sizer.dart';
 
 class HomeElectronicsProduct extends StatelessWidget {
   const HomeElectronicsProduct({Key? key}) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
