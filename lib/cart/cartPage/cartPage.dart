@@ -34,77 +34,11 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: ClipRRect(
-      //   borderRadius: BorderRadius.only(
-      //     topLeft: Radius.circular(9.sp),
-      //     topRight: Radius.circular(9.sp),
-      //   ),
-      //   child: NavigationBar(
-      //     indicatorColor: ColorData.grey,
-      //     backgroundColor: ColorData.white,
-      //     height: 8.h,
-      //     destinations: [
-      //       IconButton(
-      //         onPressed: () {
-      //           Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //             return HomePage();
-      //           }));
-      //         },
-      //         icon: Icon(
-      //           Icons.home_rounded,
-      //           size: 24.sp,
-      //           color: ColorData.red,
-      //         ),
-      //       ),
-      //       IconButton(
-      //         onPressed: () {
-      //           // ignore: avoid_print
-      //           print("favorite page");
-      //         },
-      //         icon: Icon(
-      //           Icons.favorite_border_rounded,
-      //           color: ColorData.red,
-      //         ),
-      //       ),
-      //       IconButton(
-      //         onPressed: () {
-      //           Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //             return CartPage();
-      //           }));
-      //         },
-      //         icon: Icon(
-      //           Icons.add_shopping_cart_sharp,
-      //           color: ColorData.red,
-      //         ),
-      //       ),
-      //       IconButton(
-      //         onPressed: () {
-      //           Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //             return ProfilePage();
-      //           }));
-      //         },
-      //         icon: Icon(
-      //           Icons.account_circle,
-      //           size: 26.sp,
-      //           color: ColorData.red,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
       appBar: AppBar(
         backgroundColor: ColorData.red,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) {
-              return MainPage();
-            }));
-          },
-          icon: Icon(Icons.arrow_back, color: ColorData.white),
-        ),
+        automaticallyImplyLeading: false,
         title: Center(
-          widthFactor: 2.6.sp,
+          // widthFactor: 2.6.sp,
           child: Text(
             "My Cart",
             style: TextStyle(

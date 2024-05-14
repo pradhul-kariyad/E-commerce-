@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:mainproject/cart/cartPage/cartPage.dart';
 import 'package:mainproject/colors/colors.dart';
-import 'package:mainproject/providers/downloadPdfProvider/invoiceDownloadProvider.dart';
+import 'package:mainproject/providers/invoiceDownloadProvider/invoiceDownloadProvider.dart';
 import 'package:mainproject/providers/ordersHistory/orderHistoryService.dart';
 import 'package:mainproject/providers/ordersHistory/ordersHistoryProvider.dart';
+import 'package:mainproject/providers/paginationProvider/paginationDataProvider.dart';
+import 'package:mainproject/theme/theme.dart';
+import 'package:mainproject/view/pages/productListPage/productListPage.dart';
 import 'package:mainproject/view/pages/searchPage/searchPage.dart';
 import 'package:mainproject/view/home/electronicsPage/electronics.dart';
 import 'package:mainproject/models/examples/exampleView.dart';
@@ -80,6 +83,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         // leading: InkWell(
         //   onTap: () {
         //     Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -257,16 +261,24 @@ class _HomePageState extends State<HomePage> {
                       fontSize: 14.sp),
                 ),
               ),
-              // Padding(
-              //   padding: EdgeInsets.only(top: 3.h, bottom: 1.2.h, right: 2.h),
-              //   child: Text(
-              //     "See All",
-              //     style: TextStyle(
-              //         color: ColorData.red,
-              //         fontWeight: FontWeight.w500,
-              //         fontSize: 13.sp),
-              //   ),
-              // )
+              Padding(
+                padding: EdgeInsets.only(top: 3.h, bottom: 1.2.h, right: 2.h),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ProductListPage();
+                    }));
+                  },
+                  child: Text(
+                    "See All",
+                    style: TextStyle(
+                        color: ColorData.red,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13.sp),
+                  ),
+                ),
+              )
             ],
           ),
 
@@ -330,21 +342,24 @@ class _HomePageState extends State<HomePage> {
                       fontSize: 14.sp),
                 ),
               ),
-              // Padding(
-              //   padding: EdgeInsets.only(right: 2.h),
-              //   child: InkWell(
-              //     onTap: () {
-
-              //     },
-              //     child: Text(
-              //       "See All",
-              //       style: TextStyle(
-              //           color: ColorData.red,
-              //           fontWeight: FontWeight.w500,
-              //           fontSize: 13.sp),
-              //     ),
-              //   ),
-              // ),
+              Padding(
+                padding: EdgeInsets.only(right: 2.h),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ProductListPage();
+                    }));
+                  },
+                  child: Text(
+                    "See All",
+                    style: TextStyle(
+                        color: ColorData.red,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13.sp),
+                  ),
+                ),
+              ),
             ],
           ),
           SizedBox(
@@ -358,6 +373,13 @@ class _HomePageState extends State<HomePage> {
               HomeJwellery()
             ],
           ),
+          // IconButton(
+          //     onPressed: () {
+          //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+          //         return ProductListPage();
+          //       }));
+          //     },
+          //     icon: Icon(Icons.abc_outlined)),
           // StackCategory(),
           Padding(
             padding: EdgeInsets.only(top: 5.h, right: 56.w, bottom: 1.h),

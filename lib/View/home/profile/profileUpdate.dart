@@ -38,14 +38,15 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         backgroundColor: ColorData.red,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return MainPage();
-              }));
-            },
-            icon: Icon(Icons.arrow_back, color: ColorData.white)),
+        // leading: IconButton(
+        //     onPressed: () {
+        //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //         return MainPage();
+        //       }));
+        //     },
+        //     icon: Icon(Icons.arrow_back, color: ColorData.white)),
         title: Center(
           widthFactor: 1.8.sp,
           child: Text(
@@ -200,10 +201,10 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
       if (response.statusCode == 200) {
         log("Update successful");
 
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return ProfilePage();
-        }));
+        // Navigator.pushReplacement(context,
+        //     MaterialPageRoute(builder: (context) {
+        //   return ProfilePage();
+        // }));
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: ColorData.red,
             content: Text("Profile updated successfully...")));

@@ -28,13 +28,14 @@ class ElectronicsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorData.red,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return MainPage();
-              }));
-            },
-            icon: Icon(Icons.arrow_back, color: ColorData.white)),
+        automaticallyImplyLeading: true,
+        // leading: IconButton(
+        //     onPressed: () {
+        //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //         return MainPage();
+        //       }));
+        //     },
+        //     icon: Icon(Icons.arrow_back, color: ColorData.white)),
         title: Center(
           widthFactor: 1.5.sp,
           child: Text(

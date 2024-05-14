@@ -6,6 +6,7 @@ import 'package:mainproject/providers/wishListProvider/favoriteProvider/favorite
 import 'package:mainproject/providers/wishListProvider/wishListDataProvider/wishListDataProvider.dart';
 import 'package:mainproject/providers/wishListProvider/wishlistView.dart/wishListViewProvider.dart';
 import 'package:mainproject/view/home/homePage/homePage.dart';
+import 'package:mainproject/view/home/mainPage/mainPage.dart';
 import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -27,15 +28,17 @@ class WishListProduct extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorData.red,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return HomePage();
-              }));
-            },
-            icon: Icon(Icons.arrow_back, color: ColorData.white)),
+
+        automaticallyImplyLeading: true,
+        // leading: IconButton(
+        //     onPressed: () {
+        //       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        //         return MainPage();
+        //       }));
+        //     },
+        //     icon: Icon(Icons.arrow_back, color: ColorData.white)),
         title: Center(
-          widthFactor: 1.5.sp,
+          // widthFactor: 1.5.sp,
           child: Text(
             "Product Details",
             style: TextStyle(

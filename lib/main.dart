@@ -11,7 +11,7 @@ import 'package:mainproject/providers/cartProvider/quantityMinus/quantityMinusPr
 import 'package:mainproject/providers/checkOutProvider/checkOutPostProvider/checkOutPost.dart';
 import 'package:mainproject/providers/checkOutProvider/checkOutProvider.dart';
 import 'package:mainproject/providers/checkOutProvider/verifyPaymentProvider/verifyPaymentProvider.dart';
-import 'package:mainproject/providers/downloadPdfProvider/invoiceDownloadProvider.dart';
+import 'package:mainproject/providers/invoiceDownloadProvider/invoiceDownloadProvider.dart';
 import 'package:mainproject/providers/homeProvider/homeDataProvider.dart';
 import 'package:mainproject/providers/iconProvider/iconProvider.dart';
 import 'package:mainproject/providers/orderCreationProvider/orderCreation.dart';
@@ -19,11 +19,14 @@ import 'package:mainproject/providers/ordersHistory/ordersHistoryProvider.dart';
 import 'package:mainproject/providers/paginationProvider/paginationDataProvider.dart';
 import 'package:mainproject/providers/profileProvider/imgProvider/imgProvider.dart';
 import 'package:mainproject/providers/profileProvider/profileProvider.dart';
+import 'package:mainproject/providers/profileProvider/themeProvider/themeChangeProvidert.dart';
+import 'package:mainproject/providers/profileProvider/themeProvider/themeProvider.dart';
 import 'package:mainproject/providers/searchProvider/searchDataProvider.dart';
 import 'package:mainproject/providers/auth/signInProvider.dart';
 import 'package:mainproject/providers/wishListProvider/favoriteProvider/favoriteProvider.dart';
 import 'package:mainproject/providers/wishListProvider/wishListDataProvider/wishListDataProvider.dart';
 import 'package:mainproject/providers/wishListProvider/wishlistView.dart/wishListViewProvider.dart';
+import 'package:mainproject/theme/theme.dart';
 import 'package:mainproject/view/home/mainPage/mainPage.dart';
 import 'package:mainproject/view/pages/splashScreen/firstScreen.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +51,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) {
+          return ThemeNameChangeProvider();
+        }),
+        ChangeNotifierProvider(create: (context) {
+          return ThemeIconProvider();
+        }),
+        ChangeNotifierProvider(create: (context) {
+          return ThemeProvider();
+        }),
         ChangeNotifierProvider(create: (context) {
           return LogOutProvider();
         }),
@@ -123,16 +135,20 @@ class MyApp extends StatelessWidget {
       ],
       child: Sizer(
         builder: (context, orientation, deviceType) {
-          return MaterialApp(
-            theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-            //appBarTheme: ,
-            //textTheme:  ,
-            //TextTheme(bodyLarge: TextStyle(), displaySmall: TextStyle()),
-            //iconTheme: IconThemeData(color: Colors.black)),
-            debugShowCheckedModeBanner: false,
-            home:
-                // ProviderService()
-                userlogin ? MainPage() : FirstSreen(),
+          return Consumer<ThemeProvider>(
+            builder: (BuildContext context, theme, Widget? child) {
+              return MaterialApp(
+                theme: theme.getTheme(),
+                //appBarTheme: ,
+                //textTheme:  ,
+                //TextTheme(bodyLarge: TextStyle(), displaySmall: TextStyle()),
+                //iconTheme: IconThemeData(color: Colors.black)),
+                debugShowCheckedModeBanner: false,
+                home:
+                    // ProviderService()
+                    userlogin ? MainPage() : FirstSreen(),
+              );
+            },
           );
         },
       ),

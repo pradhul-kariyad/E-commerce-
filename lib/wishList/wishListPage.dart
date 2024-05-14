@@ -31,17 +31,19 @@ class _WishListPageState extends State<WishListPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorData.red,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) {
-              return MainPage();
-            }));
-          },
-          icon: Icon(Icons.arrow_back, color: ColorData.white),
-        ),
+        automaticallyImplyLeading: false,
+
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Navigator.pushReplacement(context,
+        //         MaterialPageRoute(builder: (context) {
+        //       return MainPage();
+        //     }));
+        //   },
+        //   icon: Icon(Icons.arrow_back, color: ColorData.white),
+        // ),
         title: Center(
-          widthFactor: 2.6.sp,
+          // widthFactor: 2.6.sp,
           child: Text(
             "Wishlist",
             style: TextStyle(

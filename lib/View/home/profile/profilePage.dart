@@ -1,17 +1,22 @@
-// ignore_for_file: avoid_print, unused_import
+// ignore_for_file: avoid_print, unused_import, unused_element
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mainproject/cart/cartPage/cartPage.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/providers/auth/logOutProvider.dart';
+import 'package:mainproject/providers/profileProvider/imgProvider/imgProvider.dart';
 import 'package:mainproject/providers/profileProvider/profileProvider.dart';
 import 'package:mainproject/providers/profileProvider/profileService.dart';
+import 'package:mainproject/providers/profileProvider/themeProvider/themeChangeProvidert.dart';
+import 'package:mainproject/providers/profileProvider/themeProvider/themeProvider.dart';
+import 'package:mainproject/theme/theme.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
 import 'package:mainproject/view/home/homePage/homePage.dart';
 import 'package:mainproject/view/home/mainPage/mainPage.dart';
 import 'package:mainproject/view/home/profile/profileUpdate.dart';
 import 'package:mainproject/view/home/profile/yourProfile.dart';
 import 'package:mainproject/view/pages/ordersPage/myOrders.dart';
+import 'package:mainproject/view/widgets/profileForm/profileLightMode.dart';
 import 'package:mainproject/view/widgets/profileForm/proflieText.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -21,85 +26,19 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log("Page empliment");
     final providerOperator =
         Provider.of<ProfileProvider>(context, listen: false);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       providerOperator.getAllPosts();
     });
-    // context.read<ProfileProvider>().getAll();
     return Scaffold(
-      // bottomNavigationBar: ClipRRect(
-      //   borderRadius: BorderRadius.only(
-      //     topLeft: Radius.circular(9.sp),
-      //     topRight: Radius.circular(9.sp),
-      //   ),
-      //   child: NavigationBar(
-      //       // surfaceTintColor: ColorData.pink,
-      //       // elevation: 6,
-      //       indicatorColor: ColorData.grey,
-      //       backgroundColor: ColorData.white,
-      //       height: 8.h,
-      //       destinations: [
-      //         IconButton(
-      //             onPressed: () {
-      //               Navigator.push(context,
-      //                   MaterialPageRoute(builder: (context) {
-      //                 return HomePage();
-      //               }));
-      //               print("home page");
-      //             },
-      //             icon: Icon(
-      //               Icons.home_rounded,
-      //               size: 24.sp,
-      //               color: ColorData.red,
-      //             )),
-      //         IconButton(
-      //             onPressed: () {
-      //               print("favorite page");
-      //             },
-      //             icon: Icon(
-      //               Icons.favorite_border_rounded,
-      //               color: ColorData.red,
-      //             )),
-      //         IconButton(
-      //             onPressed: () {
-      //               Navigator.push(context,
-      //                   MaterialPageRoute(builder: (context) {
-      //                 return CartPage();
-      //               }));
-      //               print("card page");
-      //             },
-      //             icon: Icon(
-      //               Icons.add_shopping_cart_sharp,
-      //               color: ColorData.red,
-      //             )),
-      //         IconButton(
-      //             onPressed: () {
-      //               Navigator.push(context,
-      //                   MaterialPageRoute(builder: (context) {
-      //                 return ProfilePage();
-      //               }));
-      //               print("profile page");
-      //             },
-      //             icon: Icon(
-      //               Icons.account_circle,
-      //               size: 26.sp,
-      //               color: ColorData.red,
-      //             )),
-      //       ]),
-      // ),
       appBar: AppBar(
         backgroundColor: ColorData.red,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return MainPage();
-              }));
-            },
-            icon: Icon(Icons.arrow_back, color: ColorData.white)),
+        automaticallyImplyLeading: false,
         title: Center(
-          widthFactor: 2.9.sp,
+          // widthFactor: 2.9.sp,
           child: Text(
             "Profile",
             style: TextStyle(
@@ -114,10 +53,13 @@ class ProfilePage extends StatelessWidget {
           SizedBox(
             height: 5.h,
           ),
-          Center(
-              child: CircleAvatar(
-            backgroundImage: AssetImage("assets/images/hoodie.PNG"),
-            radius: 50.sp,
+          Center(child: Consumer<ImgProvider>(
+            builder: (BuildContext context, img, Widget? child) {
+              return CircleAvatar(
+                backgroundImage: img.img != null ? FileImage(img.img!) : null,
+                radius: 50.sp,
+              );
+            },
           )),
 
           Consumer<ProfileProvider>(
@@ -159,6 +101,33 @@ class ProfilePage extends StatelessWidget {
                     height: 8.h,
                   ),
                 ],
+              );
+            },
+          ),
+          Consumer<ThemeNameChangeProvider>(
+            builder: (BuildContext context, nameChange, Widget? child) {
+              return Consumer<ThemeIconProvider>(
+                builder: (BuildContext context, icon, Widget? child) {
+                  return Consumer<ThemeProvider>(
+                    builder: (BuildContext context, theme, Widget? child) {
+                      return ProfileLightMode(
+                        name: nameChange.name,
+                        icon: icon.favorite,
+                        onTap: () {
+                          nameChange.changeName();
+                          icon.changeIcon();
+                          toggleTheme(context);
+                        },
+                        iconTap: () {
+                          toggleTheme(context);
+                          icon.changeIcon();
+                          nameChange.changeName();
+                        },
+                        iconData: Icons.light_mode,
+                      );
+                    },
+                  );
+                },
               );
             },
           ),
@@ -209,6 +178,66 @@ class ProfilePage extends StatelessWidget {
           SizedBox(
             height: 1.h,
           ),
+          // ProfileText(
+          //   name: "Dark mode",
+          //   icon: Icons.logout,
+          //   iconData: Icons.arrow_forward_ios_sharp,
+          //   onTap: () {
+          //     void _showDialog(BuildContext context) {
+          //       showDialog(
+          //         context: context,
+          //         builder: (BuildContext context) {
+          //           return AlertDialog(
+          //             title: Text('Choose Theme'),
+          //             content: Container(
+          //               height: 10.h,
+          //               child: Consumer<ThemeProvider>(
+          //                 builder:
+          //                     (BuildContext context, theme, Widget? child) {
+          //                   return Column(
+          //                     children: [
+          //                       InkWell(
+          //                           onTap: () {
+          //                             theme.getTheme() == darkMode;
+          //                             toggleTheme(context);
+          //                           },
+          //                           child: Text('Light')),
+          //                       Text("Dark"),
+          //                       // Consumer<ThemeProvider>(
+          //                       //   builder: (BuildContext context, theme,
+          //                       //       Widget? child) {
+          //                       //     return Switch(
+          //                       //       value: theme.getTheme() == darkMode,
+          //                       //       // Provider.of<ThemeProvider>(context).getTheme() == lightMode,
+          //                       //       onChanged: (value) {
+          //                       //         toggleTheme(context);
+          //                       //       },
+          //                       //     );
+          //                       //   },
+          //                       // ),
+          //                     ],
+          //                   );
+          //                 },
+          //               ),
+          //             ),
+          //             actions: <Widget>[
+          //               TextButton(
+          //                 child: Text('Close'),
+          //                 onPressed: () {
+          //                   Navigator.of(context).pop();
+          //                 },
+          //               ),
+          //             ],
+          //           );
+          //         },
+          //       );
+          //     }
+
+          //     _showDialog(context);
+          //   },
+          //   iconTap: () {},
+          // ),
+
           ProfileText(
             name: "Log out",
             icon: Icons.logout,

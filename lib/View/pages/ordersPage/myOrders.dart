@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_import
 import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/providers/ordersHistory/ordersHistoryProvider.dart';
@@ -29,16 +29,18 @@ class _MyOrdersState extends State<MyOrders> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorData.red,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return ProfilePage();
-            }));
-          },
-          icon: Icon(Icons.arrow_back, color: ColorData.white),
-        ),
+        automaticallyImplyLeading: true,
+
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //       return ProfilePage();
+        //     }));
+        //   },
+        //   icon: Icon(Icons.arrow_back, color: ColorData.white),
+        // ),
         title: Center(
-          widthFactor: 1.9.sp,
+          widthFactor: 2.2.sp,
           child: Text(
             "My Orders",
             style: TextStyle(
