@@ -88,12 +88,25 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                   children: [
                     // Update the CircleAvatar to conditionally show the selected image
                     Consumer<ImgProvider>(
-                      builder: (BuildContext context, img, Widget? child) {
-                        return CircleAvatar(
-                          backgroundImage:
-                              img.img != null ? FileImage(img.img!) : null,
-                          radius: 50.sp,
-                        );
+                      builder:
+                          (BuildContext context, imgProvider, Widget? child) {
+                        if (imgProvider.isLoading) {
+                          return CircularProgressIndicator();
+                        }
+                        return imgProvider.img != null
+                            ? CircleAvatar(
+                                backgroundImage: FileImage(imgProvider.img!),
+                                radius: 50.sp,
+                              )
+                            : CircleAvatar(
+                                backgroundColor: ColorData.grey,
+                                child: Icon(
+                                  Icons.person_outline_sharp,
+                                  color: ColorData.black,
+                                  size: 50.sp,
+                                ),
+                                radius: 50.sp,
+                              );
                       },
                     ),
 
@@ -255,7 +268,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                         onTap: () async {
                           img.getImage(source: ImageSource.gallery);
                           if (img.img != null) {
-                            await img.updateImage(img.img!, context);
+                            await img.updateImage(context);
                           }
                           // context
                           //     .read<ImgProvider>()
@@ -269,7 +282,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                   onPressed: () async {
                                     img.getImage(source: ImageSource.gallery);
                                     if (img.img != null) {
-                                      await img.updateImage(img.img!, context);
+                                      await img.updateImage(context);
                                     }
                                     // context
                                     //     .read<ImgProvider>()
@@ -290,7 +303,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                         onTap: () async {
                           img.getImage(source: ImageSource.camera);
                           if (img.img != null) {
-                            await img.updateImage(img.img!, context);
+                            await img.updateImage(context);
                           }
                           // context
                           //     .read<ImgProvider>()
@@ -303,7 +316,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                   onPressed: () async {
                                     img.getImage(source: ImageSource.camera);
                                     if (img.img != null) {
-                                      await img.updateImage(img.img!, context);
+                                      await img.updateImage(context);
                                     }
                                     // context
                                     //     .read<ImgProvider>()

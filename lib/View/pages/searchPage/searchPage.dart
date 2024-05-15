@@ -14,7 +14,7 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var _searchController = TextEditingController();
+    var _searchController = TextEditingController();
 
     return Scaffold(
         appBar: AppBar(
@@ -71,8 +71,18 @@ class SearchPage extends StatelessWidget {
                               onChanged: (value) {
                                 search.getAllPosts(value);
                               },
-                              // controller: _searchController,
+                              controller: _searchController,
                               decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                      onPressed: () {
+                                        _searchController.clear();
+                                        // search.getAllPosts('');
+                                      },
+                                      icon: Icon(
+                                        Icons.clear_rounded,
+                                        color: ColorData.red,
+                                        size: 14.sp,
+                                      )),
                                   hintText: "Search",
                                   hintStyle: TextStyle(
                                       color:

@@ -18,12 +18,12 @@ class VerifyPayment extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 30.h,
+              height: 28.h,
             ),
             Center(
               child: CircleAvatar(
                 radius: 67.sp,
-                backgroundColor: ColorData.red,
+                backgroundColor: const Color.fromARGB(255, 79, 199, 83),
                 child: Icon(
                   Icons.verified_rounded,
                   color: ColorData.white,
@@ -32,7 +32,7 @@ class VerifyPayment extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 2.h,
+              height: 3.h,
             ),
             Text(
               "Payment Successful!",
@@ -51,8 +51,12 @@ class VerifyPayment extends StatelessWidget {
                   fontSize: 10.sp,
                   color: ColorData.black),
             ),
-            SizedBox(
-              height: 7.h,
+            Padding(
+              padding: EdgeInsets.only(top: 4.h, bottom: 6.h),
+              child: Divider(
+                endIndent: 7.w,
+                indent: 7.w,
+              ),
             ),
             SizedBox(
               width: 38.w,
@@ -65,7 +69,7 @@ class VerifyPayment extends StatelessWidget {
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(14)))),
                   onPressed: () {
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) {
                       return MainPage();
                     }));

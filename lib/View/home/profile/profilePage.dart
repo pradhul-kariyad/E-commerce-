@@ -53,14 +53,29 @@ class ProfilePage extends StatelessWidget {
           SizedBox(
             height: 5.h,
           ),
-          Center(child: Consumer<ImgProvider>(
-            builder: (BuildContext context, img, Widget? child) {
-              return CircleAvatar(
-                backgroundImage: img.img != null ? FileImage(img.img!) : null,
-                radius: 50.sp,
-              );
-            },
-          )),
+          Center(
+            child: Consumer<ImgProvider>(
+              builder: (BuildContext context, imgProvider, Widget? child) {
+                if (imgProvider.isLoading) {
+                  return CircularProgressIndicator();
+                }
+                return imgProvider.img != null
+                    ? CircleAvatar(
+                        backgroundImage: FileImage(imgProvider.img!),
+                        radius: 50.sp,
+                      )
+                    : CircleAvatar(
+                        backgroundColor: ColorData.grey,
+                        child: Icon(
+                          Icons.person_outline_sharp,
+                          color: ColorData.black,
+                          size: 50.sp,
+                        ),
+                        radius: 50.sp,
+                      );
+              },
+            ),
+          ),
 
           Consumer<ProfileProvider>(
             builder: (BuildContext context, profile, Widget? child) {

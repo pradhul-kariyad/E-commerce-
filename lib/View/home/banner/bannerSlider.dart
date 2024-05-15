@@ -7,8 +7,21 @@ import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class BannerSlider extends StatelessWidget {
+class BannerSlider extends StatefulWidget {
   const BannerSlider({Key? key});
+
+  @override
+  State<BannerSlider> createState() => _BannerSliderState();
+}
+
+class _BannerSliderState extends State<BannerSlider> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<BannerDataProvider>().getAllPosts();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

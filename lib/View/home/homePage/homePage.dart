@@ -8,8 +8,11 @@ import 'package:mainproject/providers/invoiceDownloadProvider/invoiceDownloadPro
 import 'package:mainproject/providers/ordersHistory/orderHistoryService.dart';
 import 'package:mainproject/providers/ordersHistory/ordersHistoryProvider.dart';
 import 'package:mainproject/providers/paginationProvider/paginationDataProvider.dart';
+import 'package:mainproject/providers/profileProvider/themeProvider/themeChangeProvidert.dart';
+import 'package:mainproject/providers/profileProvider/themeProvider/themeProvider.dart';
 import 'package:mainproject/theme/theme.dart';
 import 'package:mainproject/view/pages/productListPage/productListPage.dart';
+import 'package:mainproject/view/pages/searchPage/delegated/delegated.dart';
 import 'package:mainproject/view/pages/searchPage/searchPage.dart';
 import 'package:mainproject/view/home/electronicsPage/electronics.dart';
 import 'package:mainproject/models/examples/exampleView.dart';
@@ -55,25 +58,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<InvoiceDownloadProvider>();
-    });
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<OrderCreationProvider>();
-    });
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<CheckOutProvider>().getAllPosts();
-    });
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<WishListDataProvider>().getAllPosts();
-    });
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<BannerDataProvider>().getAllPosts();
-    });
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<HomeDataProvider>().getAllPosts();
-    });
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<CartDataProvider>().getAllPosts();
     });
 
     super.initState();
@@ -84,90 +69,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        // leading: InkWell(
-        //   onTap: () {
-        //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-        //       return ProfilePage();
-        //     }));
-        //   },
-        //   child: Padding(
-        //     padding: EdgeInsets.only(left: 6.w),
-        //     child: CircleAvatar(
-        //       backgroundImage: AssetImage("assets/images/hoodie.PNG"),
-        //       radius: 2.sp,
-        //       backgroundColor: ColorData.white,
-        //     ),
-        //   ),
-        // ),
         title: Center(child: Text("SwiftCart")),
         elevation: 0,
         backgroundColor: ColorData.red,
       ),
-
-      // bottomNavigationBar: ClipRRect(
-      //   borderRadius: BorderRadius.only(
-      //     topLeft: Radius.circular(9.sp),
-      //     topRight: Radius.circular(9.sp),
-      //   ),
-      //   child: NavigationBar(
-      //       // surfaceTintColor: ColorData.pink,
-      //       // elevation: 6,
-      //       indicatorColor: ColorData.grey,
-      //       backgroundColor: ColorData.white,
-      //       height: 8.h,
-      //       destinations: [
-      //         IconButton(
-      //             onPressed: () {
-      //               // ignore:avoid_print
-      //               print("home page");
-      //             },
-      //             icon: Icon(
-      //               Icons.home_rounded,
-      //               size: 24.sp,
-      //               color: ColorData.red,
-      //             )),
-      //         IconButton(
-      //             onPressed: () {
-      //               Navigator.push(context,
-      //                   MaterialPageRoute(builder: (context) {
-      //                 return WishListPage();
-      //               }));
-      //               // ignore: avoid_print
-      //               print("favorite page");
-      //             },
-      //             icon: Icon(
-      //               Icons.favorite_border_rounded,
-      //               color: ColorData.red,
-      //             )),
-      //         IconButton(
-      //             onPressed: () {
-      //               Navigator.push(context,
-      //                   MaterialPageRoute(builder: (context) {
-      //                 return CartPage();
-      //               }));
-      //               // ignore: avoid_print
-      //               print("card page");
-      //             },
-      //             icon: Icon(
-      //               Icons.add_shopping_cart_sharp,
-      //               color: ColorData.red,
-      //             )),
-      //         IconButton(
-      //             onPressed: () {
-      //               Navigator.push(context,
-      //                   MaterialPageRoute(builder: (context) {
-      //                 return ProfilePage();
-      //               }));
-      //               // ignore: avoid_print
-      //               print("profile page");
-      //             },
-      //             icon: Icon(
-      //               Icons.account_circle,
-      //               size: 26.sp,
-      //               color: ColorData.red,
-      //             )),
-      //       ]),
-      // ),
       body: SingleChildScrollView(
           child: Column(
         children: [
@@ -185,25 +90,32 @@ class _HomePageState extends State<HomePage> {
               Positioned(
                 top: 3.h,
                 right: 5.w,
-                child: Container(
-                  child: IconButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return SearchPage();
-                        }));
+                child: Consumer<ThemeIconProvider>(
+                  builder: (BuildContext context, icon, Widget? child) {
+                    return Consumer<ThemeProvider>(
+                      builder: (BuildContext context, theme, Widget? child) {
+                        return Container(
+                          child: IconButton(
+                              onPressed: () {
+                                theme.getTheme() == darkMode;
+                                toggleTheme(context);
+                                icon.changeIcon();
+                              },
+                              icon: Icon(
+                                icon.favorite,
+                                color: ColorData.red,
+                                size: 22,
+                              )),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: ColorData.white,
+                          ),
+                          width: 10.w,
+                          height: 5.h,
+                        );
                       },
-                      icon: Icon(
-                        Icons.menu_open_sharp,
-                        color: ColorData.red,
-                        size: 22,
-                      )),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: ColorData.white,
-                  ),
-                  width: 10.w,
-                  height: 5.h,
+                    );
+                  },
                 ),
               ),
               Positioned(
@@ -211,14 +123,19 @@ class _HomePageState extends State<HomePage> {
                   top: 3.h,
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return SearchPage();
-                      }));
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return SearchPage();
+                      // }));
+                      showSearch(
+
+                        context: context,
+                        delegate: CustomSearchDelegate(),
+                      );
                     },
                     child: Container(
                       padding: EdgeInsets.only(left: 3.w),
-                      width: 92.w,
+                      width: 80.w,
                       height: 5.h,
                       decoration: BoxDecoration(
                           color: ColorData.white,

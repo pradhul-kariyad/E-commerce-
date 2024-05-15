@@ -1,6 +1,5 @@
 // ignore_for_file: unused_import, use_build_context_synchronously, unnecessary_brace_in_string_interps
 import 'dart:developer';
-
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:mainproject/cart/razorpay/verifyPayment.dart';
@@ -40,6 +39,10 @@ class VerifyPaymentProvider extends ChangeNotifier {
       log('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => VerifyPayment()),
+        );
         log("Update successful");
       } else {
         throw Exception(

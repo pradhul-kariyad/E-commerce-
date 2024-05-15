@@ -41,6 +41,9 @@ class _OrdersHistoryPageState extends State<TrackOrder> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<OrdersHistoryProvider>().getAllPosts();
     });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<InvoiceDownloadProvider>();
+    });
     super.initState();
   }
 

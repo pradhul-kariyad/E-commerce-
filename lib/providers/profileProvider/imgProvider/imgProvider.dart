@@ -1,19 +1,24 @@
-// ignore_for_file: file_names, unnecessary_brace_in_string_interps, use_build_context_synchronously
+// ignore_for_file: file_names, unnecessary_brace_in_string_interps, use_build_context_synchronously, unused_import
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
+// ImgProvider class as previously defined
 class ImgProvider extends ChangeNotifier {
   File? _imageFile;
+  bool _isLoading = false;
 
   // Getter for the image file named as 'img'
   File? get img => _imageFile;
+  bool get isLoading => _isLoading;
 
   void getImage({required ImageSource source}) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
@@ -25,48 +30,19 @@ class ImgProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateImage(File profilePicture, BuildContext context) async {
-    log("Sending update request...");
-    log("Profile picture: $profilePicture");
+  Future<void> updateImage(BuildContext context) async {
+    if (_imageFile == null) {
+      return;
+    }
 
     try {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      final token = pref.getString('token'); // Removed 'await' here
-      if (token == null) {
-        throw Exception('Token not found');
-      }
+      _setLoading(true); // Set loading to true while uploading
+      await editWithImg(_imageFile);
 
-      // Read the file as bytes
-      List<int> imageBytes = await profilePicture.readAsBytes();
-
-      // Encode the bytes to base64
-      String base64Image = base64Encode(imageBytes);
-
-      var response = await http.post(
-        Uri.parse('http://${ip}:3000/flutter/edituser'),
-        body: {
-          'image': base64Image, // Pass the base64 string
-        },
-        headers: <String, String>{
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      log('Response status code: ${response.statusCode}');
-      log('Response body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        log("Profile picture successful");
-
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: ColorData.red,
-          content: Text("Profile updated successfully..."),
-        ));
-      } else {
-        throw Exception(
-          'Failed to update user. Status code: ${response.statusCode}',
-        );
-      }
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: ColorData.red,
+        content: Text("Profile updated successfully..."),
+      ));
     } catch (e) {
       log("Error: $e");
       showDialog(
@@ -84,6 +60,50 @@ class ImgProvider extends ChangeNotifier {
           ],
         ),
       );
+    } finally {
+      _setLoading(false); // Set loading to false after upload is done
     }
+  }
+
+  void _setLoading(bool loading) {
+    _isLoading = loading;
+    notifyListeners();
+  }
+}
+
+Future<void> editWithImg(File? image) async {
+  log('edit user function');
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  final token = pref.getString('token');
+  final String url = "http://${ip}:3000/flutter/edituser";
+
+  try {
+    final http.MultipartRequest request =
+        http.MultipartRequest('POST', Uri.parse(url));
+    request.headers['Authorization'] = 'Bearer $token';
+
+    // Add image file to request if available
+    if (image != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'image',
+          image.path,
+          contentType: MediaType('image', 'jpeg'),
+        ),
+      );
+    }
+
+    final http.StreamedResponse response = await request.send();
+    final int statusCode = response.statusCode;
+
+    if (statusCode == 200) {
+      final responseBody = await response.stream.bytesToString();
+      log('Edit operation successful: $responseBody');
+    } else {
+      final responseBody = await response.stream.bytesToString();
+      log('Edit operation failed with status code: $statusCode, response: $responseBody');
+    }
+  } catch (e) {
+    log('Exception: $e');
   }
 }

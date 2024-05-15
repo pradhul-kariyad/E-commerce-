@@ -25,6 +25,9 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<OrderCreationProvider>();
+    });
     super.initState();
   }
 
@@ -159,10 +162,12 @@ class _PaymentPageState extends State<PaymentPage> {
       state!,
       context,
     );
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => VerifyPayment()),
-    );
+    
+
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => VerifyPayment()),
+    // );
     log(response.data.toString());
     // showAlertDialog(
     //     context, "Payment Successful", "Payment ID: ${response.paymentId}");
