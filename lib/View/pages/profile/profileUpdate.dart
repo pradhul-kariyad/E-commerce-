@@ -11,8 +11,8 @@ import 'package:mainproject/providers/profileProvider/imgProvider/imgProvider.da
 import 'package:mainproject/providers/profileProvider/profileProvider.dart';
 import 'package:mainproject/providers/profileProvider/proflieUpdate/profileUpdate.dart';
 import 'package:mainproject/view/home/mainPage/mainPage.dart';
-import 'package:mainproject/view/home/profile/profilePage.dart';
-import 'package:mainproject/view/home/profile/yourProfile.dart';
+import 'package:mainproject/view/pages/profile/profilePage.dart';
+import 'package:mainproject/view/pages/profile/yourProfile.dart';
 import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
 import 'package:mainproject/view/widgets/myButton.dart';
 import 'package:mainproject/view/widgets/profileForm/profileButton.dart';

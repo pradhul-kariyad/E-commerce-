@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/providers/profileProvider/themeProvider/themeProvider.dart';
@@ -25,34 +26,43 @@ class ProfileLightMode extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: EdgeInsets.only(left: 4.w),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Icon(icon, color: ColorData.red),
-                SizedBox(
-                  width: 4.w,
-                ),
-                Text(
-                  name,
-                  style:
-                      TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            Consumer<ThemeProvider>(
-              builder: (BuildContext context, theme, Widget? child) {
-                return Switch(
-                  value: theme.getTheme() == darkMode,
-                  // Provider.of<ThemeProvider>(context).getTheme() == lightMode,
-                  onChanged: (value) {
-                    toggleTheme(context);
-                  },
-                );
-              },
-            ),
-          ],
+        child: Container(
+          height: 8.2.h,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Icon(icon, color: ColorData.red),
+                  SizedBox(
+                    width: 4.w,
+                  ),
+                  Text(
+                    name,
+                    style:
+                        TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+              Consumer<ThemeProvider>(
+                builder: (BuildContext context, theme, Widget? child) {
+                  return CupertinoSwitch(
+                      activeColor: ColorData.red,
+                      value: theme.getTheme() == darkMode,
+                      onChanged: (value) {
+                        toggleTheme(context);
+                      });
+                  // return Switch(
+                  //   value: theme.getTheme() == darkMode,
+                  //   // Provider.of<ThemeProvider>(context).getTheme() == lightMode,
+                  //   onChanged: (value) {
+                  //     toggleTheme(context);
+                  //   },
+                  // );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

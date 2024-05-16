@@ -4,7 +4,7 @@ import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/providers/searchProvider/searchDataProvider.dart';
 import 'package:mainproject/view/pages/searchPage/searchProduct.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
-import 'package:mainproject/view/home/profile/profilePage.dart';
+import 'package:mainproject/view/pages/profile/profilePage.dart';
 import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';

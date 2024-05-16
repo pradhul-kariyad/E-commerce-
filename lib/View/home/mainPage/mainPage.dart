@@ -5,7 +5,7 @@ import 'package:mainproject/cart/cartPage/cartPage.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/view/pages/searchPage/searchPage.dart';
 import 'package:mainproject/view/home/homePage/homePage.dart';
-import 'package:mainproject/view/home/profile/profilePage.dart';
+import 'package:mainproject/view/pages/profile/profilePage.dart';
 import 'package:mainproject/wishlist/wishListPage.dart';
 import 'package:sizer/sizer.dart';
 

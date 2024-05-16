@@ -10,7 +10,7 @@ import 'package:mainproject/providers/cartProvider/quantityMinus/quantityMinusPr
 import 'package:mainproject/providers/checkOutProvider/checkOutProvider.dart';
 import 'package:mainproject/view/home/homePage/homePage.dart';
 import 'package:mainproject/view/home/mainPage/mainPage.dart';
-import 'package:mainproject/view/home/profile/profilePage.dart';
+import 'package:mainproject/view/pages/profile/profilePage.dart';
 import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -71,171 +71,175 @@ class _CartPageState extends State<CartPage> {
             child: Column(children: [
               SizedBox(
                 height: 66.h,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: item.items!.length,
-                  itemBuilder: (context, index) {
-                    var product = item.items![index].product!;
-                    return SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(top: 1.h),
-                                width: double.infinity,
-                                height: 22.h,
-                              ),
-                              Positioned(
-                                top: 2.h,
-                                left: 9.5.w,
-                                child: Container(
-                                  width: 31.w,
-                                  height: 20.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(11)),
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                          'http://$ip:3000/products-images/${product.image!}'),
-                                      fit: BoxFit.cover,
+                child: RefreshIndicator(
+                  color: ColorData.red,
+                  onRefresh: _refresh,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: item.items!.length,
+                    itemBuilder: (context, index) {
+                      var product = item.items![index].product!;
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Stack(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(top: 1.h),
+                                  width: double.infinity,
+                                  height: 22.h,
+                                ),
+                                Positioned(
+                                  top: 2.h,
+                                  left: 9.5.w,
+                                  child: Container(
+                                    width: 31.w,
+                                    height: 20.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(11)),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            'http://$ip:3000/products-images/${product.image!}'),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Positioned(
-                                top: 6.h,
-                                left: 45.w,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      product.name.toString(),
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w500,
-                                        color: ColorData.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Positioned(
-                                top: 15.h,
-                                left: 45.w,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'Price : ${product.price}',
-                                      style: TextStyle(
-                                        fontSize: 10.sp,
-                                        fontWeight: FontWeight.w500,
-                                        color: ColorData.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Positioned(
-                                top: 10.1.h,
-                                right: 4.w,
-                                child: Consumer<DeleteCartProvider>(
-                                  builder: (BuildContext context, delete,
-                                      Widget? child) {
-                                    return InkWell(
-                                      onTap: () async {
-                                        delete.delete(product.id, context);
-                                      },
-                                      child: Icon(
-                                        Icons.delete_outline_outlined,
-                                        color: ColorData.red,
-                                        size: 22.sp,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Positioned(
-                                top: 10.2.h,
-                                right: 15.w,
-                                child: Row(
-                                  children: [
-                                    Consumer<QuantityMinusProvider>(
-                                      builder: (BuildContext context, value,
-                                          Widget? child) {
-                                        return InkWell(
-                                          onTap: () async {
-                                            await value.quantityMinus(
-                                                product.id, context);
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: ColorData.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(4.sp),
-                                            ),
-                                            width: 6.w,
-                                            height: 3.h,
-                                            child: Icon(Icons.remove,
-                                                size: 14.sp,
-                                                color: ColorData.black),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 2.w, right: 2.w),
-                                      child: Text(
-                                        value.cartModel.data!.items![index]
-                                            .quantity
-                                            .toString(),
+                                Positioned(
+                                  top: 6.h,
+                                  left: 45.w,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        product.name.toString(),
                                         style: TextStyle(
-                                          color: ColorData.black,
+                                          fontSize: 14.sp,
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 15.sp,
+                                          color: ColorData.black,
                                         ),
                                       ),
-                                    ),
-                                    Consumer<QuantityAddProvider>(
-                                      builder: (BuildContext context, value,
-                                          Widget? child) {
-                                        return InkWell(
-                                          onTap: () async {
-                                            await value.quantityAdd(
-                                                product.id, context);
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: ColorData.red,
-                                              borderRadius:
-                                                  BorderRadius.circular(4.sp),
-                                            ),
-                                            width: 6.w,
-                                            height: 3.h,
-                                            child: Icon(Icons.add,
-                                                size: 14.sp,
-                                                color: ColorData.white),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 1.h),
-                            child: Divider(
-                              endIndent: 5.w,
-                              indent: 5.w,
-                              color: Color.fromARGB(255, 196, 187, 187),
+                                Positioned(
+                                  top: 15.h,
+                                  left: 45.w,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Price : ${product.price}',
+                                        style: TextStyle(
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: ColorData.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 10.1.h,
+                                  right: 4.w,
+                                  child: Consumer<DeleteCartProvider>(
+                                    builder: (BuildContext context, delete,
+                                        Widget? child) {
+                                      return InkWell(
+                                        onTap: () async {
+                                          delete.delete(product.id, context);
+                                        },
+                                        child: Icon(
+                                          Icons.delete_outline_outlined,
+                                          color: ColorData.red,
+                                          size: 22.sp,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 10.2.h,
+                                  right: 15.w,
+                                  child: Row(
+                                    children: [
+                                      Consumer<QuantityMinusProvider>(
+                                        builder: (BuildContext context, value,
+                                            Widget? child) {
+                                          return InkWell(
+                                            onTap: () async {
+                                              await value.quantityMinus(
+                                                  product.id, context);
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: ColorData.grey,
+                                                borderRadius:
+                                                    BorderRadius.circular(4.sp),
+                                              ),
+                                              width: 6.w,
+                                              height: 3.h,
+                                              child: Icon(Icons.remove,
+                                                  size: 14.sp,
+                                                  color: ColorData.black),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 2.w, right: 2.w),
+                                        child: Text(
+                                          value.cartModel.data!.items![index]
+                                              .quantity
+                                              .toString(),
+                                          style: TextStyle(
+                                            color: ColorData.black,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15.sp,
+                                          ),
+                                        ),
+                                      ),
+                                      Consumer<QuantityAddProvider>(
+                                        builder: (BuildContext context, value,
+                                            Widget? child) {
+                                          return InkWell(
+                                            onTap: () async {
+                                              await value.quantityAdd(
+                                                  product.id, context);
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: ColorData.red,
+                                                borderRadius:
+                                                    BorderRadius.circular(4.sp),
+                                              ),
+                                              width: 6.w,
+                                              height: 3.h,
+                                              child: Icon(Icons.add,
+                                                  size: 14.sp,
+                                                  color: ColorData.white),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                            Padding(
+                              padding: EdgeInsets.only(top: 1.h),
+                              child: Divider(
+                                endIndent: 5.w,
+                                indent: 5.w,
+                                color: Color.fromARGB(255, 196, 187, 187),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               SizedBox(
@@ -283,5 +287,10 @@ class _CartPageState extends State<CartPage> {
         },
       ),
     );
+  }
+
+  Future<void> _refresh() {
+    context.read<CartDataProvider>().getAllPosts();
+    return Future.delayed(Duration(seconds: 1));
   }
 }

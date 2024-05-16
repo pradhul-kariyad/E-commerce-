@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/providers/profileProvider/profileProvider.dart';
-import 'package:mainproject/view/home/profile/profilePage.dart';
-import 'package:mainproject/view/home/profile/profileUpdate.dart';
+import 'package:mainproject/view/pages/profile/profilePage.dart';
+import 'package:mainproject/view/pages/profile/profileUpdate.dart';
 import 'package:mainproject/view/widgets/profileForm/normalProfile.dart';
 import 'package:mainproject/view/widgets/profileForm/profileButton.dart';
 import 'package:mainproject/view/widgets/profileForm/profileForm.dart';

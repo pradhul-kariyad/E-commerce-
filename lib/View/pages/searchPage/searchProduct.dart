@@ -78,10 +78,10 @@ class SearchProduct extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.only(
-              top: 2.h,
+              top: 4.h,
             ),
-            width: 95.w,
-            height: 60.h,
+            width: 93.w,
+            height: 56.h,
             decoration: BoxDecoration(
                 // border: Border.all(color: ColorData.wgrey),
                 borderRadius: BorderRadius.circular(5.sp),
