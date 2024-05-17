@@ -9,11 +9,22 @@ class LogOutProvider extends ChangeNotifier {
   Future<void> logout(BuildContext context) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.remove('token');
-    await pref.setBool('userlogin', false);
-    // context.read<SignInPage>()
-    log("Account log out");
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return SignInPage();
-    }));
+    await pref.remove('userlogin');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => SignInPage()),
+    );
   }
 }
+
+  // Future<void> logout(BuildContext context) async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   await pref.remove('token');
+  //   await pref.setBool('userlogin', false);
+  //   // context.read<SignInPage>()
+  //   log("Account log out");
+  //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+  //     return SignInPage();
+  //   }));
+  // }
+

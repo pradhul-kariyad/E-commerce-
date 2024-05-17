@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_print, unused_field, unused_import, prefer_final_fields, must_be_immutable, use_build_context_synchronously, unnecessary_brace_in_string_interps, await_only_futures, no_leading_underscores_for_local_identifiers, non_constant_identifier_names
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -6,19 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:http/http.dart' as http;
-import 'package:mainproject/models/profileModel/profile_data/profile_data.dart';
 import 'package:mainproject/providers/profileProvider/imgProvider/imgProvider.dart';
 import 'package:mainproject/providers/profileProvider/profileProvider.dart';
-import 'package:mainproject/providers/profileProvider/proflieUpdate/profileUpdate.dart';
-import 'package:mainproject/view/home/mainPage/mainPage.dart';
 import 'package:mainproject/view/pages/profile/profilePage.dart';
-import 'package:mainproject/view/pages/profile/yourProfile.dart';
 import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
-import 'package:mainproject/view/widgets/myButton.dart';
 import 'package:mainproject/view/widgets/profileForm/profileButton.dart';
 import 'package:mainproject/view/widgets/profileForm/profileForm.dart';
-import 'package:mainproject/view/widgets/textForm/nameForm.dart';
-import 'package:mainproject/view/widgets/textForm/passwordForm.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -32,7 +24,6 @@ class ProfileUpdate extends StatefulWidget {
 
 class _ProfileUpdateState extends State<ProfileUpdate> {
   final _formKey = GlobalKey<FormState>();
-  // File? imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +31,6 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: ColorData.red,
-        // leading: IconButton(
-        //     onPressed: () {
-        //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        //         return MainPage();
-        //       }));
-        //     },
-        //     icon: Icon(Icons.arrow_back, color: ColorData.white)),
         title: Center(
           widthFactor: 1.8.sp,
           child: Text(
@@ -86,15 +70,12 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                 Center(
                     child: Stack(
                   children: [
-                    // Update the CircleAvatar to conditionally show the selected image
                     Consumer<ImgProvider>(
                       builder:
                           (BuildContext context, imgProvider, Widget? child) {
                         if (imgProvider.isLoading) {
                           return CircularProgressIndicator(
                             strokeAlign: -5,
-                            // value: 1,
-                            // backgroundColor: ColorData.black,
                             color: ColorData.grey,
                           );
                         }
@@ -107,25 +88,10 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                 backgroundColor: ColorData.white,
                                 backgroundImage:
                                     AssetImage('assets/images/profileImg.PNG'),
-                                // child: Icon(
-                                //   Icons.person_outline_sharp,
-                                //   color: ColorData.black,
-                                //   size: 50.sp,
-                                // ),
                                 radius: 50.sp,
                               );
                       },
                     ),
-
-                    // if (imageFile != null)
-                    //   CircleAvatar(
-                    //     backgroundImage: FileImage(imageFile!),
-                    //     radius: 50.sp,
-                    //   ),
-                    // CircleAvatar(
-                    //   backgroundImage: AssetImage("assets/images/hoodie.PNG"),
-                    //   radius: 50.sp,
-                    // ),
                     Positioned(
                         top: 11.h,
                         left: 24.w,
@@ -194,7 +160,6 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
     );
   }
 
-  //
   Future<void> update(String name, String phoneno, BuildContext context) async {
     log("Sending update request...");
     log("Name: $name");
@@ -202,7 +167,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
 
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
-      final token = pref.getString('token'); // Removed 'await' here
+      final token = pref.getString('token');
       if (token == null) {
         throw Exception('Token not found');
       }
@@ -220,15 +185,21 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
 
       if (response.statusCode == 200) {
         log("Update successful");
-
         // Navigator.pushReplacement(context,
         //     MaterialPageRoute(builder: (context) {
         //   return ProfilePage();
         // }));
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+
+        // Update the profile image if any image was selected
+        var imgProvider = Provider.of<ImgProvider>(context, listen: false);
+        if (imgProvider.img != null) {
+          await imgProvider.updateImage(context);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: ColorData.red,
-            content: Text("Profile updated successfully...")));
-        // Show success dialog or navigate to the HomePage
+            content: Text("Profile updated successfully..."),
+          ));
+        }
       } else {
         throw Exception(
             'Failed to update user. Status code: ${response.statusCode}');
@@ -266,8 +237,6 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                         topLeft: Radius.circular(10.sp),
                         topRight: Radius.circular(10.sp))),
                 height: 14.h,
-                // width: MediaQuery.of(context).size.width,
-                // height: MediaQuery.of(context).size.height / 4,
                 child: Row(
                   children: [
                     Expanded(
@@ -277,10 +246,6 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                           if (img.img != null) {
                             await img.updateImage(context);
                           }
-                          // context
-                          //     .read<ImgProvider>()
-                          //     .getImage(source: ImageSource.camera);
-                          // _pickImageFromGallery();
                         },
                         child: SizedBox(
                           child: Column(
@@ -291,13 +256,9 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                     if (img.img != null) {
                                       await img.updateImage(context);
                                     }
-                                    // context
-                                    //     .read<ImgProvider>()
-                                    //     .getImage(source: ImageSource.gallery);
                                   },
                                   icon: Icon(
                                     Icons.image,
-                                    // size: 70,
                                   )),
                               Text("Gallery")
                             ],
@@ -312,9 +273,6 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                           if (img.img != null) {
                             await img.updateImage(context);
                           }
-                          // context
-                          //     .read<ImgProvider>()
-                          //     .getImage(source: ImageSource.camera);
                         },
                         child: SizedBox(
                           child: Column(
@@ -325,13 +283,9 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                                     if (img.img != null) {
                                       await img.updateImage(context);
                                     }
-                                    // context
-                                    //     .read<ImgProvider>()
-                                    //     .getImage(source: ImageSource.camera);
                                   },
                                   icon: Icon(
                                     Icons.camera_alt,
-                                    // size: 70,
                                   )),
                               Text("Camera"),
                             ],

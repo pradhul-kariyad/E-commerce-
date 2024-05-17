@@ -1,4 +1,5 @@
-// ignore_for_file: file_names, unnecessary_brace_in_string_interps, use_build_context_synchronously, unused_import
+// ignore_for_file: unused_import
+
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -6,17 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
-// ImgProvider class as previously defined
 class ImgProvider extends ChangeNotifier {
   File? _imageFile;
   bool _isLoading = false;
 
-  // Getter for the image file named as 'img'
   File? get img => _imageFile;
   bool get isLoading => _isLoading;
 
@@ -25,7 +23,6 @@ class ImgProvider extends ChangeNotifier {
     if (pickedFile == null) {
       return;
     }
-
     _imageFile = File(pickedFile.path);
     notifyListeners();
   }

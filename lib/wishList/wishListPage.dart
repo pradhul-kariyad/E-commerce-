@@ -72,7 +72,7 @@ class _WishListPageState extends State<WishListPage> {
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 5 / 8,
+                childAspectRatio: 3 / 4.4,
                 // mainAxisSpacing: 1,
               ),
               shrinkWrap: true,
