@@ -1,13 +1,14 @@
-// ignore_for_file: avoid_print
-
+// ignore_for_file: avoid_print, unused_import
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mainproject/colors/colors.dart';
+import 'package:mainproject/providers/auth/verifyProvider.dart';
 import 'package:mainproject/view/auth/createPage.dart';
-import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
-// import 'package:mainproject/view/home/homePage.dart';
-// import 'package:mainproject/view/auth/createPage.dart';
+import "package:mainproject/view/widgets/ipaddress/ipaddress.dart";
 import 'package:mainproject/view/auth/signInPage.dart';
 import 'package:mainproject/view/widgets/myButton.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
@@ -26,8 +27,6 @@ class OtpVarification extends StatelessWidget {
   }
 }
 
-/// This is the basic usage of Pinput
-/// For more examples check out the demo directory
 class PinputExample extends StatefulWidget {
   const PinputExample({Key? key}) : super(key: key);
 
@@ -55,8 +54,8 @@ class _PinputExampleState extends State<PinputExample> {
     const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
 
     final defaultPinTheme = PinTheme(
-      width: 56,
-      height: 56,
+      width: 11.w,
+      height: 7.h,
       textStyle: const TextStyle(
         fontSize: 22,
         color: Color.fromRGBO(30, 60, 87, 1),
@@ -109,13 +108,13 @@ class _PinputExampleState extends State<PinputExample> {
                 fontWeight: FontWeight.w400,
                 color: const Color.fromARGB(255, 209, 207, 207)),
           ),
-          Text(
-            'example@email.com',
-            style: TextStyle(
-                color: Colors.red,
-                fontSize: 11.1.sp,
-                fontWeight: FontWeight.w500),
-          ),
+          // Text(
+          //   'example@email.com',
+          //   style: TextStyle(
+          //       color: Colors.red,
+          //       fontSize: 11.1.sp,
+          //       fontWeight: FontWeight.w500),
+          // ),
           SizedBox(
             height: 7.h,
           ),
@@ -209,12 +208,24 @@ class _PinputExampleState extends State<PinputExample> {
                 SizedBox(
                   height: 5.h,
                 ),
-                MyButton(
-                  name: 'Verify',
-                  onPressed: () {
-                    verifyCode(pinController.text, context);
-                    focusNode.unfocus();
-                    formKey.currentState!.validate();
+                Consumer<VerifyProvider>(
+                  builder: (BuildContext context, verify, Widget? child) {
+                    if (verify.isLoading) {
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: ColorData.grey,
+                        strokeAlign: -4,
+                      ));
+                    }
+                    return MyButton(
+                      name: 'Verify',
+                      onPressed: () {
+                        // verifyCode(pinController.text, context);
+                        verify.verifyCode(pinController.text, context);
+                        focusNode.unfocus();
+                        formKey.currentState!.validate();
+                      },
+                    );
                   },
                 ),
                 // TextButton(
@@ -232,78 +243,82 @@ class _PinputExampleState extends State<PinputExample> {
     );
   }
 
-  void verifyCode(String otp, BuildContext context) async {
-    setState(() {
-      isLoading = true;
-    });
+  // void verifyCode(String otp, BuildContext context) async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
 
-    try {
-      SharedPreferences pref = await SharedPreferences.getInstance();
+  //   try {
+  //     SharedPreferences pref = await SharedPreferences.getInstance();
 
-      // ignore: await_only_futures
-      var userid = await pref.get('userid');
+  //     // ignore: await_only_futures
+  //     var userid = await pref.get('userid');
 
-      // Replace the URL with your actual endpoint
-      var response = await http.post(
-        // ignore: unnecessary_brace_in_string_interps
-        Uri.parse('http://${ip}:3000/flutter/validate-otp'),
-        body: {
-          'otp': otp,
-          'id': userid,
-        },
-      );
+  //     // Replace the URL with your actual endpoint
+  //     var response = await http.post(
+  //       // ignore: unnecessary_brace_in_string_interps
+  //       Uri.parse('http://${ip}:3000/flutter/validate-otp'),
+  //       body: {
+  //         'otp': otp,
+  //         'id': userid,
+  //       },
+  //     );
 
-      if (response.statusCode == 200) {
-        // Code verification successful
-        debugPrint('Code verification successful');
-        // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => SignInPage()),
-        );
-      } else {
-        // Code verification failed
-        debugPrint('Code verification failed');
-        // ignore: use_build_context_synchronously
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Verification Failed'),
-            content: Text('The entered code is incorrect.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          ),
-        );
-      }
-    } catch (e) {
-      // Error occurred during API call
-      debugPrint('Error occurred: $e');
-      // ignore: use_build_context_synchronously
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Error'),
-          content: Text('An error occurred while verifying the code.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
-    }
+  //     if (response.statusCode == 200) {
+  //       // Code verification successful
+  //       debugPrint('Code verification successful');
+  //       // ignore: use_build_context_synchronously
+  //       Navigator.pushReplacement(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => SignInPage()),
+  //       );
+  //     } else {
+  //       // Code verification failed
+  //       debugPrint('Code verification failed');
+  //       // ignore: use_build_context_synchronously
+  //       showDialog(
+  //         context: context,
+  //         builder: (context) => AlertDialog(
+  //           title: Text('Verification Failed'),
+  //           content: Text('The entered code is incorrect.'),
+  //           actions: [
+  //             TextButton(
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //               child: Text('OK'),
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     log(e.toString());
+  //     // Error occurred during API call
+  //     debugPrint('Error occurred: $e');
+  //     // ignore: use_build_context_synchronously
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //         title: Text('Error'),
+  //         content: Text('An error occurred while verifying the code.'),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //             child: Text(
+  //               'OK',
+  //               style: TextStyle(color: ColorData.red),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   }
 
-    setState(() {
-      isLoading = false;
-    });
-  }
+  //   setState(() {
+  //     isLoading = false;
+  //   });
+  // }
 }

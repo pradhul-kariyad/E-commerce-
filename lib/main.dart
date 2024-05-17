@@ -2,6 +2,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:mainproject/providers/auth/createDataProvider.dart';
 import 'package:mainproject/providers/auth/logOutProvider.dart';
+import 'package:mainproject/providers/auth/verifyProvider.dart';
 import 'package:mainproject/providers/bannerProvider/bannerDataProvider.dart';
 import 'package:mainproject/providers/cartProvider/addCart/addCartProvider.dart';
 import 'package:mainproject/providers/cartProvider/cartDataProvider/cartDataProvider.dart';
@@ -11,6 +12,8 @@ import 'package:mainproject/providers/cartProvider/quantityMinus/quantityMinusPr
 import 'package:mainproject/providers/checkOutProvider/checkOutPostProvider/checkOutPost.dart';
 import 'package:mainproject/providers/checkOutProvider/checkOutProvider.dart';
 import 'package:mainproject/providers/checkOutProvider/verifyPaymentProvider/verifyPaymentProvider.dart';
+import 'package:mainproject/providers/circularProvider/circularProvider.dart';
+import 'package:mainproject/providers/currentPageProvider/currentPageProvider.dart';
 import 'package:mainproject/providers/invoiceDownloadProvider/invoiceDownloadProvider.dart';
 import 'package:mainproject/providers/homeProvider/homeDataProvider.dart';
 import 'package:mainproject/providers/iconProvider/iconProvider.dart';
@@ -27,6 +30,7 @@ import 'package:mainproject/providers/wishListProvider/favoriteProvider/favorite
 import 'package:mainproject/providers/wishListProvider/wishListDataProvider/wishListDataProvider.dart';
 import 'package:mainproject/providers/wishListProvider/wishlistView.dart/wishListViewProvider.dart';
 import 'package:mainproject/theme/theme.dart';
+import 'package:mainproject/view/auth/otpVerification.dart';
 import 'package:mainproject/view/home/mainPage/mainPage.dart';
 import 'package:mainproject/view/pages/splashScreen/firstScreen.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +75,9 @@ class MyApp extends StatelessWidget {
         }),
         ChangeNotifierProvider(create: (context) {
           return CreateDateProvider();
+        }),
+           ChangeNotifierProvider(create: (context) {
+          return VerifyProvider();
         }),
         ChangeNotifierProvider(create: (context) {
           return SignInProvider();
@@ -131,6 +138,12 @@ class MyApp extends StatelessWidget {
         }),
         ChangeNotifierProvider(create: (context) {
           return HomeDataProvider();
+        }),
+            ChangeNotifierProvider(create: (context) {
+          return CircularProvider();
+        }),
+              ChangeNotifierProvider(create: (context) {
+          return CurrentPageProvider();
         }),
       ],
       child: Sizer(

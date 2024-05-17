@@ -3,90 +3,77 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mainproject/cart/cartPage/cartPage.dart';
 import 'package:mainproject/colors/colors.dart';
+import 'package:mainproject/providers/currentPageProvider/currentPageProvider.dart';
 import 'package:mainproject/view/pages/searchPage/searchPage.dart';
 import 'package:mainproject/view/home/homePage/homePage.dart';
 import 'package:mainproject/view/pages/profile/profilePage.dart';
 import 'package:mainproject/wishlist/wishListPage.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  final List<Widget> pages = [
+  final List<Widget> pages = const [
     const HomePage(),
     const WishListPage(),
     const CartPage(),
     const ProfilePage()
   ];
-  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[currentPage],
-      bottomNavigationBar: BottomNavigationBar(
-          useLegacyColorScheme: false,
-          enableFeedback: true,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          // backgroundColor: ColorData.pink,
-          currentIndex: currentPage,
-          onTap: (value) {
-            setState(() {
-              currentPage = value;
-            });
-          },
-          iconSize: 22.sp,
-          unselectedItemColor: ColorData.red,
-          selectedItemColor: ColorData.red,
-          elevation: 5.h,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home_rounded,
-                // color: ColorData.red,
-                // size: 22.sp,
+      body: Consumer<CurrentPageProvider>(
+        builder: (context, provider, child) {
+          return pages[provider.currentPage];
+        },
+      ),
+      bottomNavigationBar: Consumer<CurrentPageProvider>(
+        builder: (context, provider, child) {
+          return BottomNavigationBar(
+            // mouseCursor: SystemMouseCursors.allScroll,
+            useLegacyColorScheme: false,
+            enableFeedback: true,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            currentIndex: provider.currentPage,
+            onTap: (value) {
+              provider.setCurrentPage(value);
+            },
+            iconSize: 22.sp,
+            unselectedItemColor: ColorData.red,
+            selectedItemColor: ColorData.red,
+            elevation: 5.h,
+            items: const [
+              const BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.home_rounded,
+                ),
+                label: '',
               ),
-              label: '',
-            ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(
-            //     Icons.search,
-            //     // color: ColorData.red,
-            //     // size: 22.sp,
-            //   ),
-            //   label: '',
-            // ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.favorite_border_rounded,
-                // color: ColorData.red,
-                // size: 22.sp,
+              const BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.favorite_border_rounded,
+                ),
+                label: '',
               ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.shopping_cart_rounded,
-                // color: ColorData.red,
-                // size: 22.sp,
+              const BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.shopping_cart_rounded,
+                ),
+                label: '',
               ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.account_circle,
-                // color: ColorData.red,
-                // size: 22.sp,
+              const BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.account_circle,
+                ),
+                label: '',
               ),
-              label: '',
-            ),
-          ]),
+            ],
+          );
+        },
+      ),
     );
   }
 }

@@ -105,11 +105,11 @@ class SignInPage extends StatelessWidget {
                 padding: EdgeInsets.only(left: 54.w, top: 1.3.h),
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => NewPasswordPage()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => NewPasswordPage()),
+                    // );
                   },
                   child: Text(
                     'Forgot Password?',

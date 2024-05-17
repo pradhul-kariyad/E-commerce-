@@ -13,7 +13,7 @@ class SearchDataProvider extends ChangeNotifier {
   bool isloading = false;
   SearchModel _searchModel = SearchModel();
   SearchModel get searchModel => _searchModel;
-  Future<void> getAllPosts(search) async {
+  Future<void> getAllPosts(search, {required bool refresh}) async {
     try {
       isloading = true;
       notifyListeners();

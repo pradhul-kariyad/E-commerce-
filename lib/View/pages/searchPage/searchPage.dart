@@ -69,7 +69,7 @@ class SearchPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10.sp)),
                             child: TextFormField(
                               onChanged: (value) {
-                                search.getAllPosts(value);
+                                search.getAllPosts(value, refresh: true);
                               },
                               controller: _searchController,
                               decoration: InputDecoration(

@@ -13,6 +13,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
         fontSize: 14.sp, // Adjust the font size as needed
         color: ColorData.white,
       );
+
   InputDecorationTheme get searchFieldDecorationTheme => InputDecorationTheme(
         border: InputBorder.none, // Remove underline
         focusedBorder: InputBorder.none, // Remove underline on focus
@@ -73,17 +74,14 @@ class CustomSearchDelegate extends SearchDelegate<String> {
   @override
   Widget buildResults(BuildContext context) {
     // Ensure to update the results based on the query
-    context.read<SearchDataProvider>().getAllPosts(query);
-    // Provider.of<SearchDataProvider>(context, listen: false).getAllPosts(query);
+    context.read<SearchDataProvider>().getAllPosts(query, refresh: true);
     return SearchPagee();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     if (query.isNotEmpty) {
-      context.read<SearchDataProvider>().getAllPosts(query);
-      // Provider.of<SearchDataProvider>(context, listen: false)
-      //     .getAllPosts(query);
+      context.read<SearchDataProvider>().getAllPosts(query, refresh: true);
     }
     return SearchPagee();
   }
@@ -105,15 +103,14 @@ class _SearchPageeState extends State<SearchPagee> {
     });
   }
 
+  Future<void> _refresh() async {
+    context.read<SearchDataProvider>().getAllPosts('', refresh: true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<SearchDataProvider>(
       builder: (BuildContext context, search, Widget? child) {
-        Future<void> _refresh() {
-          context.read<SearchDataProvider>().getAllPosts(1);
-          return Future.delayed(Duration(seconds: 1));
-        }
-
         if (search.isloading) {
           return Center(
               child: CircularProgressIndicator(color: ColorData.grey));
@@ -127,13 +124,13 @@ class _SearchPageeState extends State<SearchPagee> {
             ),
           );
         } else {
-          return Container(
-            margin: EdgeInsets.only(top: 5.h),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: RefreshIndicator(
-                color: ColorData.red,
-                onRefresh: _refresh,
+          return RefreshIndicator(
+            onRefresh: _refresh,
+            color: ColorData.red,
+            child: Container(
+              margin: EdgeInsets.only(top: 5.h),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,

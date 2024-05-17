@@ -57,7 +57,12 @@ class ProfilePage extends StatelessWidget {
             child: Consumer<ImgProvider>(
               builder: (BuildContext context, imgProvider, Widget? child) {
                 if (imgProvider.isLoading) {
-                  return CircularProgressIndicator();
+                  return CircularProgressIndicator(
+                    strokeAlign: -5,
+                    // value: 1,
+                    // backgroundColor: ColorData.black,
+                    color: ColorData.grey,
+                  );
                 }
                 return imgProvider.img != null
                     ? CircleAvatar(
@@ -65,12 +70,14 @@ class ProfilePage extends StatelessWidget {
                         radius: 50.sp,
                       )
                     : CircleAvatar(
-                        backgroundColor: ColorData.grey,
-                        child: Icon(
-                          Icons.person_outline_sharp,
-                          color: ColorData.black,
-                          size: 50.sp,
-                        ),
+                        backgroundColor: ColorData.white,
+                        backgroundImage:
+                            AssetImage('assets/images/profileImg.PNG'),
+                        // child: Icon(
+                        //   Icons.person_outline_sharp,
+                        //   color: ColorData.black,
+                        //   size: 50.sp,
+                        // ),
                         radius: 50.sp,
                       );
               },

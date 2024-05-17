@@ -2,9 +2,12 @@
 
 import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:mainproject/colors/colors.dart';
+import 'package:mainproject/providers/circularProvider/circularProvider.dart';
 import 'package:mainproject/view/auth/createPage.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
 import 'package:mainproject/view/widgets/myButton.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class FirstSreen extends StatelessWidget {
@@ -79,14 +82,26 @@ class FirstSreen extends StatelessWidget {
                     fontSize: 18.sp)),
             Padding(
               padding: EdgeInsets.only(top: 5.h),
-              child: MyButton(
-                name: "Let's Get Started",
-                onPressed: () {
-                  print('Start Page');
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) {
-                    return SignInPage();
-                  }));
+              child: Consumer<CircularProvider>(
+                builder: (BuildContext context, circular, Widget? child) {
+                  if (circular.isLoading) {
+                    return Center(
+                        child: CircularProgressIndicator(
+                      color: ColorData.grey,
+                      strokeAlign: -4,
+                    ));
+                  }
+                  return MyButton(
+                    name: "Let's Get Started",
+                    onPressed: () {
+                      circular.setLoading(context);
+                      // print('Start Page');
+                      // Navigator.pushReplacement(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return SignInPage();
+                      // }));
+                    },
+                  );
                 },
               ),
             ),

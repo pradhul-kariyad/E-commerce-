@@ -8,10 +8,12 @@ import 'package:mainproject/providers/invoiceDownloadProvider/invoiceDownloadPro
 import 'package:mainproject/providers/ordersHistory/orderHistoryService.dart';
 import 'package:mainproject/providers/ordersHistory/ordersHistoryProvider.dart';
 import 'package:mainproject/providers/paginationProvider/paginationDataProvider.dart';
+import 'package:mainproject/providers/profileProvider/imgProvider/imgProvider.dart';
 import 'package:mainproject/providers/profileProvider/themeProvider/themeChangeProvidert.dart';
 import 'package:mainproject/providers/profileProvider/themeProvider/themeProvider.dart';
 import 'package:mainproject/theme/theme.dart';
 import 'package:mainproject/view/pages/productListPage/productListPage.dart';
+import 'package:mainproject/view/pages/profile/profileUpdate.dart';
 import 'package:mainproject/view/pages/searchPage/customSearchDelegate/customSearchDelegate.dart';
 import 'package:mainproject/view/pages/searchPage/searchPage.dart';
 import 'package:mainproject/view/home/electronicsPage/electronics.dart';
@@ -72,7 +74,45 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Center(child: Text("SwiftCart")),
+        title: Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 24.w, right: 2.w),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ProfileUpdate();
+                  }));
+                },
+                child: Consumer<ImgProvider>(
+                  builder: (BuildContext context, imgProvider, Widget? child) {
+                    if (imgProvider.isLoading) {
+                      return CircularProgressIndicator(
+                        strokeAlign: -5,
+                        // value: 1,
+                        // backgroundColor: ColorData.black,
+                        color: ColorData.grey,
+                      );
+                    }
+                    return imgProvider.img != null
+                        ? CircleAvatar(
+                            backgroundColor: ColorData.white,
+                            backgroundImage: FileImage(imgProvider.img!),
+                            radius: 12.sp,
+                          )
+                        : CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/profileImg.PNG'),
+                            backgroundColor: ColorData.white,
+                            radius: 12.sp,
+                          );
+                  },
+                ),
+              ),
+            ),
+            Text("SwiftCart"),
+          ],
+        ),
         elevation: 0,
         backgroundColor: ColorData.red,
       ),
