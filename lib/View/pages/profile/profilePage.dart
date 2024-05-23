@@ -34,6 +34,10 @@ class _ProfilePageState extends State<ProfilePage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<ProfileProvider>().getAllPosts();
       // providerOperator.getAllPosts();
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        context.read<ImgProvider>();
+        // providerOperator.getAllPosts();
+      });
     });
 
     super.initState();
@@ -46,7 +50,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     log("Page implement");
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorData.red,

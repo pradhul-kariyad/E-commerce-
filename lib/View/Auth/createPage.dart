@@ -256,7 +256,7 @@ class CreatePage extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context,
+                        Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) {
                           return SignInPage();
                         }));

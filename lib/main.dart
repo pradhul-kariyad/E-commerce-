@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) {
           return CreateDateProvider();
         }),
-           ChangeNotifierProvider(create: (context) {
+        ChangeNotifierProvider(create: (context) {
           return VerifyProvider();
         }),
         ChangeNotifierProvider(create: (context) {
@@ -139,10 +139,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) {
           return HomeDataProvider();
         }),
-            ChangeNotifierProvider(create: (context) {
+        ChangeNotifierProvider(create: (context) {
           return CircularProvider();
         }),
-              ChangeNotifierProvider(create: (context) {
+        ChangeNotifierProvider(create: (context) {
           return CurrentPageProvider();
         }),
       ],
