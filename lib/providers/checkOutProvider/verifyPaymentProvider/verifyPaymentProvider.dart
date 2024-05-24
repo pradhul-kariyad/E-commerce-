@@ -39,10 +39,10 @@ class VerifyPaymentProvider extends ChangeNotifier {
       log('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => VerifyPayment()),
-        );
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => VerifyPayment()),
+        // );
         log("Update successful");
       } else {
         throw Exception(

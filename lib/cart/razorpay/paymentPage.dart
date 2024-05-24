@@ -164,10 +164,10 @@ class _PaymentPageState extends State<PaymentPage> {
     );
     
 
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => VerifyPayment()),
-    // );
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => VerifyPayment()),
+    );
     log(response.data.toString());
     // showAlertDialog(
     //     context, "Payment Successful", "Payment ID: ${response.paymentId}");
