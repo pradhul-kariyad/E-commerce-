@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:mainproject/view/auth/signInPage.dart';
 import 'package:mainproject/view/widgets/ipaddress/ipaddress.dart';
+import 'package:sizer/sizer.dart';
 
 class VerifyProvider extends ChangeNotifier {
   bool _isLoading = false;
@@ -32,9 +33,30 @@ class VerifyProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         debugPrint('Code verification successful');
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => SignInPage()),
+        );
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(
+              "congratulations, your account has been successfully created",
+              style: TextStyle(fontSize: 13.sp),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: ColorData.red),
+                ),
+              ),
+            ],
+          ),
         );
       } else {
         debugPrint('Code verification failed');
