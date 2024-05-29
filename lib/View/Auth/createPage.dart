@@ -161,29 +161,29 @@ class CreatePage extends StatelessWidget {
                   );
                 },
               ),
+              // Padding(
+              //   padding: EdgeInsets.only(top: 1.h, left: 2.2.h),
+              //   child: Row(
+              //     children: [
+              //       Checkboxx(),
+              //       Text(
+              //         'Agree with ',
+              //         style: TextStyle(
+              //             fontWeight: FontWeight.w500, fontSize: 11.1.sp),
+              //       ),
+              //       Text(
+              //         "Terms&Condition",
+              //         style: TextStyle(
+              //             color: Colors.red,
+              //             fontSize: 11.1.sp,
+              //             decoration: TextDecoration.underline,
+              //             fontWeight: FontWeight.w500),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Padding(
-                padding: EdgeInsets.only(top: 1.h, left: 2.2.h),
-                child: Row(
-                  children: [
-                    Checkboxx(),
-                    Text(
-                      'Agree with ',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500, fontSize: 11.1.sp),
-                    ),
-                    Text(
-                      "Terms&Condition",
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 11.1.sp,
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 1.h, bottom: 2.h),
+                padding: EdgeInsets.only(top: 3.h, bottom: 2.h),
                 child: Consumer<CreateDateProvider>(
                   builder: (BuildContext context, create, Widget? child) {
                     if (create.isLoading) {
