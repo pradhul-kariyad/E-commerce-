@@ -40,7 +40,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
         ),
       ),
       textTheme: TextTheme(
-        headline6: TextStyle(
+        titleLarge: TextStyle(
           fontSize: 18.sp,
           color: Colors.white,
         ),
