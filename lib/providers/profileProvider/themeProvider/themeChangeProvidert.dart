@@ -13,6 +13,7 @@ class ThemeIconProvider extends ChangeNotifier {
 class ThemeNameChangeProvider extends ChangeNotifier {
   bool isSelected = true;
   String name = 'Light mode';
+  // void changeName() {
   void changeName() {
     isSelected = !isSelected;
     name = isSelected ? 'Light mode' : 'Dark mode';
