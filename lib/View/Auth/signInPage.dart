@@ -116,7 +116,7 @@ class SignInPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11.sp,
                       fontWeight: FontWeight.w500,
-                      color: Colors.red,
+                      color: Color(0x423B3B),
                       decoration: TextDecoration.underline,
                     ),
                   ),

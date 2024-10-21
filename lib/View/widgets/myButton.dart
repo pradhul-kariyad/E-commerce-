@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, avoid_print
+// ignore_for_file: file_names, avoid_print, deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:mainproject/colors/colors.dart';
 import 'package:sizer/sizer.dart';
